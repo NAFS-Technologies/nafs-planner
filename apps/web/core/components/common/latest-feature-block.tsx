@@ -20,9 +20,9 @@ export function LatestFeatureBlock() {
         <ThoughtsOutline className="mx-3 mr-2 h-7 w-7" />
         <p className="text-left text-13 text-primary">
           Pages gets a facelift! Write anything and use Galileo to help you start.{" "}
-          <Link href="https://plane.so/changelog" target="_blank" rel="noopener noreferrer">
+          <span className="inline">
             <span className="text-13 font-medium underline hover:cursor-pointer">Learn more</span>
-          </Link>
+          </span>
         </p>
       </div>
       <div
@@ -33,7 +33,7 @@ export function LatestFeatureBlock() {
         <div className="h-[90%]">
           <img
             src={latestFeatures}
-            alt="Plane Work items"
+            alt="Taskflow Work items"
             className={`-mt-2 ml-10 h-full rounded-md ${resolvedTheme === "dark" ? "bg-surface-1" : "bg-layer-2"}`}
           />
         </div>

@@ -24,23 +24,7 @@ import { cn } from "@plane/utils";
 import { useInstance, useTheme } from "@/hooks/store";
 // assets
 
-const helpOptions = [
-  {
-    name: "Documentation",
-    href: "https://docs.plane.so/",
-    Icon: PagesOutline,
-  },
-  {
-    name: "Join our Forum",
-    href: "https://forum.plane.so",
-    Icon: ChatOutline,
-  },
-  {
-    name: "Report a bug",
-    href: "https://github.com/makeplane/plane/issues/new/choose",
-    Icon: Github,
-  },
-];
+const helpOptions: { name: string; href?: string; Icon: any }[] = [];
 
 export const AdminSidebarHelpSection = observer(function AdminSidebarHelpSection() {
   // states
@@ -70,17 +54,17 @@ export const AdminSidebarHelpSection = observer(function AdminSidebarHelpSection
               className={`relative flex items-center gap-1 rounded-sm bg-layer-1 px-2 py-1 text-body-xs-medium whitespace-nowrap text-secondary`}
             >
               <NewTabOutline width={14} height={14} />
-              {!isSidebarCollapsed && "Redirect to Plane"}
+              {!isSidebarCollapsed && "Redirect to Taskflow"}
             </a>
           </>
         ) : (
-          <Tooltip label="Redirect to Plane" side="right">
+          <Tooltip label="Redirect to Taskflow" side="right">
             <a
               href={redirectionLink}
               className={`relative flex items-center gap-1 rounded-sm bg-layer-1 px-2 py-1 text-body-xs-medium whitespace-nowrap text-secondary`}
             >
               <NewTabOutline width={14} height={14} />
-              {!isSidebarCollapsed && "Redirect to Plane"}
+              {!isSidebarCollapsed && "Redirect to Taskflow"}
             </a>
           </Tooltip>
         )}
