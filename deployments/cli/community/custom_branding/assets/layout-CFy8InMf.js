@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-CsebpYib.js";import{a as t,t as n}from"./components-CKy5sCfo.js";var r=e(),i=()=>[{title:`Sign up - Taskflow`},{name:`robots`,content:`index, nofollow`}],a=t(function(){return(0,r.jsx)(n,{})});export{a as default,i as meta};

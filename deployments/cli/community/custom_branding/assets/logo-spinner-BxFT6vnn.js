@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-CsebpYib.js";var i=e();function a(){return(0,i.jsx)("div",{className:"flex items-center justify-center",children:(0,i.jsx)("img",{src:"/assets/taskflow.jpeg",alt:"Taskflow",className:"h-8 w-auto object-contain animate-pulse sm:h-11"})})}export{a as t};

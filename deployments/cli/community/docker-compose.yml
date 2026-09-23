@@ -67,10 +67,12 @@ services:
     image: makeplane/plane-frontend:${APP_RELEASE:-stable}
     volumes:
       # Caddy (preview release)
+      - ./custom_branding/Caddyfile:/etc/caddy/Caddyfile:ro
       - ./custom_branding/index.html:/usr/share/caddy/html/index.html:ro
       - ./custom_branding/site.webmanifest.json:/usr/share/caddy/html/site.webmanifest.json:ro
       - ./custom_branding/manifest.json:/usr/share/caddy/html/manifest.json:ro
       - ./custom_branding/favicon.ico:/usr/share/caddy/html/favicon.ico:ro
+      - ./custom_branding/sw.js:/usr/share/caddy/html/sw.js:ro
       - ./custom_branding/assets/taskflow.png:/usr/share/caddy/html/assets/taskflow.png:ro
       - ./custom_branding/assets/taskflow.jpeg:/usr/share/caddy/html/assets/taskflow.jpeg:ro
       - ./custom_branding/assets/og-image-DL-1GVBU.png:/usr/share/caddy/html/assets/og-image-DL-1GVBU.png:ro
@@ -84,6 +86,12 @@ services:
       - ./custom_branding/assets/header--GLf94Gi.js:/usr/share/caddy/html/assets/header--GLf94Gi.js:ro
       - ./custom_branding/assets/auth-base-CfuoF3V9.js:/usr/share/caddy/html/assets/auth-base-CfuoF3V9.js:ro
       - ./custom_branding/assets/auth-Djr-NUSJ.js:/usr/share/caddy/html/assets/auth-Djr-NUSJ.js:ro
+      - ./custom_branding/assets/icons-DWzY_Ct4-Dkaxklm9.js:/usr/share/caddy/html/assets/icons-DWzY_Ct4-Dkaxklm9.js:ro
+      - ./custom_branding/assets/instance-wrapper-CfKAESue.js:/usr/share/caddy/html/assets/instance-wrapper-CfKAESue.js:ro
+      - ./custom_branding/assets/layout-CFy8InMf.js:/usr/share/caddy/html/assets/layout-CFy8InMf.js:ro
+      - ./custom_branding/assets/logo-spinner-BxFT6vnn.js:/usr/share/caddy/html/assets/logo-spinner-BxFT6vnn.js:ro
+      - ./custom_branding/assets/logo-spinner-dark-Cc1AqekO.gif:/usr/share/caddy/html/assets/logo-spinner-dark-Cc1AqekO.gif:ro
+      - ./custom_branding/assets/logo-spinner-light-DmBc4A-4.gif:/usr/share/caddy/html/assets/logo-spinner-light-DmBc4A-4.gif:ro
       - ./custom_branding/favicon/android-chrome-192x192.png:/usr/share/caddy/html/favicon/android-chrome-192x192.png:ro
       - ./custom_branding/favicon/android-chrome-512x512.png:/usr/share/caddy/html/favicon/android-chrome-512x512.png:ro
       - ./custom_branding/icons/icon-192x192.png:/usr/share/caddy/html/icons/icon-192x192.png:ro
@@ -95,6 +103,7 @@ services:
       - ./custom_branding/site.webmanifest.json:/usr/share/nginx/html/site.webmanifest.json:ro
       - ./custom_branding/manifest.json:/usr/share/nginx/html/manifest.json:ro
       - ./custom_branding/favicon.ico:/usr/share/nginx/html/favicon.ico:ro
+      - ./custom_branding/sw.js:/usr/share/nginx/html/sw.js:ro
       - ./custom_branding/assets/taskflow.png:/usr/share/nginx/html/assets/taskflow.png:ro
       - ./custom_branding/assets/taskflow.jpeg:/usr/share/nginx/html/assets/taskflow.jpeg:ro
       - ./custom_branding/assets/og-image-DL-1GVBU.png:/usr/share/nginx/html/assets/og-image-DL-1GVBU.png:ro
@@ -108,6 +117,12 @@ services:
       - ./custom_branding/assets/header--GLf94Gi.js:/usr/share/nginx/html/assets/header--GLf94Gi.js:ro
       - ./custom_branding/assets/auth-base-CfuoF3V9.js:/usr/share/nginx/html/assets/auth-base-CfuoF3V9.js:ro
       - ./custom_branding/assets/auth-Djr-NUSJ.js:/usr/share/nginx/html/assets/auth-Djr-NUSJ.js:ro
+      - ./custom_branding/assets/icons-DWzY_Ct4-Dkaxklm9.js:/usr/share/nginx/html/assets/icons-DWzY_Ct4-Dkaxklm9.js:ro
+      - ./custom_branding/assets/instance-wrapper-CfKAESue.js:/usr/share/nginx/html/assets/instance-wrapper-CfKAESue.js:ro
+      - ./custom_branding/assets/layout-CFy8InMf.js:/usr/share/nginx/html/assets/layout-CFy8InMf.js:ro
+      - ./custom_branding/assets/logo-spinner-BxFT6vnn.js:/usr/share/nginx/html/assets/logo-spinner-BxFT6vnn.js:ro
+      - ./custom_branding/assets/logo-spinner-dark-Cc1AqekO.gif:/usr/share/nginx/html/assets/logo-spinner-dark-Cc1AqekO.gif:ro
+      - ./custom_branding/assets/logo-spinner-light-DmBc4A-4.gif:/usr/share/nginx/html/assets/logo-spinner-light-DmBc4A-4.gif:ro
       - ./custom_branding/favicon/android-chrome-192x192.png:/usr/share/nginx/html/favicon/android-chrome-192x192.png:ro
       - ./custom_branding/favicon/android-chrome-512x512.png:/usr/share/nginx/html/favicon/android-chrome-512x512.png:ro
       - ./custom_branding/icons/icon-192x192.png:/usr/share/nginx/html/icons/icon-192x192.png:ro
