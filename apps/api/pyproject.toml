@@ -1,7 +1,7 @@
 [project]
-name = "Plane"
+name = "TaskFlow"
 version = "0.24.0"
-description = "Open-source project management that unlocks customer value"
+description = "Self-hosted project and work management for teams"
 
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
