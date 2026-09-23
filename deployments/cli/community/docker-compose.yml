@@ -66,11 +66,38 @@ services:
     restart: always
     image: makeplane/plane-frontend:${APP_RELEASE:-stable}
     volumes:
+      # Caddy (preview release)
+      - ./custom_branding/index.html:/usr/share/caddy/html/index.html:ro
+      - ./custom_branding/site.webmanifest.json:/usr/share/caddy/html/site.webmanifest.json:ro
+      - ./custom_branding/manifest.json:/usr/share/caddy/html/manifest.json:ro
+      - ./custom_branding/favicon.ico:/usr/share/caddy/html/favicon.ico:ro
+      - ./custom_branding/assets/taskflow.png:/usr/share/caddy/html/assets/taskflow.png:ro
+      - ./custom_branding/assets/taskflow.jpeg:/usr/share/caddy/html/assets/taskflow.jpeg:ro
+      - ./custom_branding/assets/og-image-DL-1GVBU.png:/usr/share/caddy/html/assets/og-image-DL-1GVBU.png:ro
+      - ./custom_branding/assets/favicon-32x32-cfWXc3P9.png:/usr/share/caddy/html/assets/favicon-32x32-cfWXc3P9.png:ro
+      - ./custom_branding/assets/favicon-16x16-B_Opgp1K.png:/usr/share/caddy/html/assets/favicon-16x16-B_Opgp1K.png:ro
+      - ./custom_branding/assets/icon-180x180-ArenqHjH.png:/usr/share/caddy/html/assets/icon-180x180-ArenqHjH.png:ro
+      - ./custom_branding/assets/icon-512x512-CyS1mcXS.png:/usr/share/caddy/html/assets/icon-512x512-CyS1mcXS.png:ro
+      - ./custom_branding/assets/favicon-DJlV-mcI.ico:/usr/share/caddy/html/assets/favicon-DJlV-mcI.ico:ro
+      - ./custom_branding/assets/gradient-logo-BKMvbTcN.webp:/usr/share/caddy/html/assets/gradient-logo-BKMvbTcN.webp:ro
+      - ./custom_branding/assets/gradient-bg-logo-DJ_Te6tL.webp:/usr/share/caddy/html/assets/gradient-bg-logo-DJ_Te6tL.webp:ro
+      - ./custom_branding/assets/header--GLf94Gi.js:/usr/share/caddy/html/assets/header--GLf94Gi.js:ro
+      - ./custom_branding/assets/auth-base-CfuoF3V9.js:/usr/share/caddy/html/assets/auth-base-CfuoF3V9.js:ro
+      - ./custom_branding/assets/auth-Djr-NUSJ.js:/usr/share/caddy/html/assets/auth-Djr-NUSJ.js:ro
+      - ./custom_branding/favicon/android-chrome-192x192.png:/usr/share/caddy/html/favicon/android-chrome-192x192.png:ro
+      - ./custom_branding/favicon/android-chrome-512x512.png:/usr/share/caddy/html/favicon/android-chrome-512x512.png:ro
+      - ./custom_branding/icons/icon-192x192.png:/usr/share/caddy/html/icons/icon-192x192.png:ro
+      - ./custom_branding/icons/icon-348x348.png:/usr/share/caddy/html/icons/icon-348x348.png:ro
+      - ./custom_branding/icons/icon-512x512.png:/usr/share/caddy/html/icons/icon-512x512.png:ro
+      - ./custom_branding/plane-logos/plane-mobile-pwa.png:/usr/share/caddy/html/plane-logos/plane-mobile-pwa.png:ro
+      # Nginx (stable release fallback)
       - ./custom_branding/index.html:/usr/share/nginx/html/index.html:ro
       - ./custom_branding/site.webmanifest.json:/usr/share/nginx/html/site.webmanifest.json:ro
       - ./custom_branding/manifest.json:/usr/share/nginx/html/manifest.json:ro
+      - ./custom_branding/favicon.ico:/usr/share/nginx/html/favicon.ico:ro
       - ./custom_branding/assets/taskflow.png:/usr/share/nginx/html/assets/taskflow.png:ro
       - ./custom_branding/assets/taskflow.jpeg:/usr/share/nginx/html/assets/taskflow.jpeg:ro
+      - ./custom_branding/assets/og-image-DL-1GVBU.png:/usr/share/nginx/html/assets/og-image-DL-1GVBU.png:ro
       - ./custom_branding/assets/favicon-32x32-cfWXc3P9.png:/usr/share/nginx/html/assets/favicon-32x32-cfWXc3P9.png:ro
       - ./custom_branding/assets/favicon-16x16-B_Opgp1K.png:/usr/share/nginx/html/assets/favicon-16x16-B_Opgp1K.png:ro
       - ./custom_branding/assets/icon-180x180-ArenqHjH.png:/usr/share/nginx/html/assets/icon-180x180-ArenqHjH.png:ro
@@ -78,6 +105,11 @@ services:
       - ./custom_branding/assets/favicon-DJlV-mcI.ico:/usr/share/nginx/html/assets/favicon-DJlV-mcI.ico:ro
       - ./custom_branding/assets/gradient-logo-BKMvbTcN.webp:/usr/share/nginx/html/assets/gradient-logo-BKMvbTcN.webp:ro
       - ./custom_branding/assets/gradient-bg-logo-DJ_Te6tL.webp:/usr/share/nginx/html/assets/gradient-bg-logo-DJ_Te6tL.webp:ro
+      - ./custom_branding/assets/header--GLf94Gi.js:/usr/share/nginx/html/assets/header--GLf94Gi.js:ro
+      - ./custom_branding/assets/auth-base-CfuoF3V9.js:/usr/share/nginx/html/assets/auth-base-CfuoF3V9.js:ro
+      - ./custom_branding/assets/auth-Djr-NUSJ.js:/usr/share/nginx/html/assets/auth-Djr-NUSJ.js:ro
+      - ./custom_branding/favicon/android-chrome-192x192.png:/usr/share/nginx/html/favicon/android-chrome-192x192.png:ro
+      - ./custom_branding/favicon/android-chrome-512x512.png:/usr/share/nginx/html/favicon/android-chrome-512x512.png:ro
       - ./custom_branding/icons/icon-192x192.png:/usr/share/nginx/html/icons/icon-192x192.png:ro
       - ./custom_branding/icons/icon-348x348.png:/usr/share/nginx/html/icons/icon-348x348.png:ro
       - ./custom_branding/icons/icon-512x512.png:/usr/share/nginx/html/icons/icon-512x512.png:ro
