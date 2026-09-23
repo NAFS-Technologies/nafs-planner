@@ -10,7 +10,6 @@ import type { LinksFunction } from "react-router";
 import { ThemeProvider, useTheme } from "next-themes";
 import { SITE_DESCRIPTION, SITE_NAME } from "@plane/constants";
 import taskFlowIcon from "@/app/assets/branding/taskflow-icon.svg?url";
-import ogImage from "@/app/assets/og-image.png?url";
 import globalStyles from "@/styles/globals.css?url";
 import type { Route } from "./+types/root";
 import { LogoSpinner } from "@/components/common/logo-spinner";
@@ -70,20 +69,11 @@ export const meta: Route.MetaFunction = () => [
   { name: "description", content: SITE_DESCRIPTION },
   { property: "og:title", content: APP_TITLE },
   { property: "og:description", content: SITE_DESCRIPTION },
-  { property: "og:image", content: ogImage },
-  { property: "og:image:width", content: "1200" },
-  { property: "og:image:height", content: "630" },
-  { property: "og:image:alt", content: "TaskFlow - Project management for modern teams" },
   {
     name: "keywords",
     content:
       "project management, task management, work item tracking, agile, scrum, kanban, collaboration, planning",
   },
-  { name: "twitter:card", content: "summary_large_image" },
-  { name: "twitter:image", content: ogImage },
-  { name: "twitter:image:width", content: "1200" },
-  { name: "twitter:image:height", content: "630" },
-  { name: "twitter:image:alt", content: "TaskFlow - Project management for modern teams" },
 ];
 
 export default function Root() {
