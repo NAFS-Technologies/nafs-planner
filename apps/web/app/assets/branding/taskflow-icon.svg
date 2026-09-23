@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title id="title">TaskFlow</title>
+  <defs>
+    <linearGradient id="taskflow-blue" x1="66" y1="72" x2="444" y2="442" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D4F86"/>
+      <stop offset="1" stop-color="#086BC8"/>
+    </linearGradient>
+    <linearGradient id="taskflow-teal" x1="190" y1="176" x2="324" y2="324" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10BFAE"/>
+      <stop offset="1" stop-color="#13CCBA"/>
+    </linearGradient>
+  </defs>
+
+  <path d="M111 135H337C380 135 415 170 415 213C415 256 380 291 337 291H245"
+        stroke="url(#taskflow-blue)" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M261 291H174C132 291 98 325 98 367C98 409 132 443 174 443H373"
+        stroke="url(#taskflow-blue)" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <circle cx="104" cy="135" r="59" fill="url(#taskflow-blue)"/>
+  <circle cx="381" cy="443" r="59" fill="url(#taskflow-blue)"/>
+  <circle cx="256" cy="291" r="70" fill="url(#taskflow-teal)"/>
+</svg>

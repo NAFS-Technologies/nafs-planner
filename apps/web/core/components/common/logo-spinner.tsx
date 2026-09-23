@@ -4,19 +4,12 @@
  * See the LICENSE file for details.
  */
 
-import { useTheme } from "next-themes";
-// assets
-import LogoSpinnerDark from "@/app/assets/images/logo-spinner-dark.gif?url";
-import LogoSpinnerLight from "@/app/assets/images/logo-spinner-light.gif?url";
+import TaskFlowLogo from "@/app/assets/branding/taskflow-logo.svg?url";
 
 export function LogoSpinner() {
-  const { resolvedTheme } = useTheme();
-
-  const logoSrc = resolvedTheme === "dark" ? LogoSpinnerDark : LogoSpinnerLight;
-
   return (
     <div className="flex items-center justify-center">
-      <img src={logoSrc} alt="logo" className="h-6 w-auto object-contain sm:h-11" />
+      <img src={TaskFlowLogo} alt="TaskFlow" className="h-7 w-auto object-contain sm:h-11" />
     </div>
   );
 }
