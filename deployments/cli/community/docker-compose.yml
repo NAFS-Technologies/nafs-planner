@@ -89,6 +89,9 @@ services:
       - ./custom_branding/assets/icons-DWzY_Ct4-Dkaxklm9.js:/usr/share/caddy/html/assets/icons-DWzY_Ct4-Dkaxklm9.js:ro
       - ./custom_branding/assets/instance-wrapper-CfKAESue.js:/usr/share/caddy/html/assets/instance-wrapper-CfKAESue.js:ro
       - ./custom_branding/assets/layout-CFy8InMf.js:/usr/share/caddy/html/assets/layout-CFy8InMf.js:ro
+      - ./custom_branding/assets/manifest-ca0f27cc.js:/usr/share/caddy/html/assets/manifest-ca0f27cc.js:ro
+      - ./custom_branding/assets/page-CI_YORzB.js:/usr/share/caddy/html/assets/page-CI_YORzB.js:ro
+      - ./custom_branding/assets/page-n4qoLI2R.js:/usr/share/caddy/html/assets/page-n4qoLI2R.js:ro
       - ./custom_branding/assets/logo-spinner-BxFT6vnn.js:/usr/share/caddy/html/assets/logo-spinner-BxFT6vnn.js:ro
       - ./custom_branding/assets/logo-spinner-dark-Cc1AqekO.gif:/usr/share/caddy/html/assets/logo-spinner-dark-Cc1AqekO.gif:ro
       - ./custom_branding/assets/logo-spinner-light-DmBc4A-4.gif:/usr/share/caddy/html/assets/logo-spinner-light-DmBc4A-4.gif:ro
@@ -120,6 +123,9 @@ services:
       - ./custom_branding/assets/icons-DWzY_Ct4-Dkaxklm9.js:/usr/share/nginx/html/assets/icons-DWzY_Ct4-Dkaxklm9.js:ro
       - ./custom_branding/assets/instance-wrapper-CfKAESue.js:/usr/share/nginx/html/assets/instance-wrapper-CfKAESue.js:ro
       - ./custom_branding/assets/layout-CFy8InMf.js:/usr/share/nginx/html/assets/layout-CFy8InMf.js:ro
+      - ./custom_branding/assets/manifest-ca0f27cc.js:/usr/share/nginx/html/assets/manifest-ca0f27cc.js:ro
+      - ./custom_branding/assets/page-CI_YORzB.js:/usr/share/nginx/html/assets/page-CI_YORzB.js:ro
+      - ./custom_branding/assets/page-n4qoLI2R.js:/usr/share/nginx/html/assets/page-n4qoLI2R.js:ro
       - ./custom_branding/assets/logo-spinner-BxFT6vnn.js:/usr/share/nginx/html/assets/logo-spinner-BxFT6vnn.js:ro
       - ./custom_branding/assets/logo-spinner-dark-Cc1AqekO.gif:/usr/share/nginx/html/assets/logo-spinner-dark-Cc1AqekO.gif:ro
       - ./custom_branding/assets/logo-spinner-light-DmBc4A-4.gif:/usr/share/nginx/html/assets/logo-spinner-light-DmBc4A-4.gif:ro
