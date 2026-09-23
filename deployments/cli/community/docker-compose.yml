@@ -63,7 +63,25 @@ x-app-env: &app-env
 
 services:
   web:
+    restart: always
     image: makeplane/plane-frontend:${APP_RELEASE:-stable}
+    volumes:
+      - ./custom_branding/index.html:/usr/share/nginx/html/index.html:ro
+      - ./custom_branding/site.webmanifest.json:/usr/share/nginx/html/site.webmanifest.json:ro
+      - ./custom_branding/manifest.json:/usr/share/nginx/html/manifest.json:ro
+      - ./custom_branding/assets/taskflow.png:/usr/share/nginx/html/assets/taskflow.png:ro
+      - ./custom_branding/assets/taskflow.jpeg:/usr/share/nginx/html/assets/taskflow.jpeg:ro
+      - ./custom_branding/assets/favicon-32x32-cfWXc3P9.png:/usr/share/nginx/html/assets/favicon-32x32-cfWXc3P9.png:ro
+      - ./custom_branding/assets/favicon-16x16-B_Opgp1K.png:/usr/share/nginx/html/assets/favicon-16x16-B_Opgp1K.png:ro
+      - ./custom_branding/assets/icon-180x180-ArenqHjH.png:/usr/share/nginx/html/assets/icon-180x180-ArenqHjH.png:ro
+      - ./custom_branding/assets/icon-512x512-CyS1mcXS.png:/usr/share/nginx/html/assets/icon-512x512-CyS1mcXS.png:ro
+      - ./custom_branding/assets/favicon-DJlV-mcI.ico:/usr/share/nginx/html/assets/favicon-DJlV-mcI.ico:ro
+      - ./custom_branding/assets/gradient-logo-BKMvbTcN.webp:/usr/share/nginx/html/assets/gradient-logo-BKMvbTcN.webp:ro
+      - ./custom_branding/assets/gradient-bg-logo-DJ_Te6tL.webp:/usr/share/nginx/html/assets/gradient-bg-logo-DJ_Te6tL.webp:ro
+      - ./custom_branding/icons/icon-192x192.png:/usr/share/nginx/html/icons/icon-192x192.png:ro
+      - ./custom_branding/icons/icon-348x348.png:/usr/share/nginx/html/icons/icon-348x348.png:ro
+      - ./custom_branding/icons/icon-512x512.png:/usr/share/nginx/html/icons/icon-512x512.png:ro
+      - ./custom_branding/plane-logos/plane-mobile-pwa.png:/usr/share/nginx/html/plane-logos/plane-mobile-pwa.png:ro
     deploy:
       replicas: ${WEB_REPLICAS:-1}
       restart_policy:
@@ -73,6 +91,7 @@ services:
       - worker
 
   space:
+    restart: always
     image: makeplane/plane-space:${APP_RELEASE:-stable}
     deploy:
       replicas: ${SPACE_REPLICAS:-1}
@@ -84,6 +103,7 @@ services:
       - web
 
   admin:
+    restart: always
     image: makeplane/plane-admin:${APP_RELEASE:-stable}
     deploy:
       replicas: ${ADMIN_REPLICAS:-1}
@@ -94,6 +114,7 @@ services:
       - web
 
   live:
+    restart: always
     image: makeplane/plane-live:${APP_RELEASE:-stable}
     environment:
       <<: [*live-env, *redis-env]
@@ -106,6 +127,7 @@ services:
       - web
 
   api:
+    restart: always
     image: makeplane/plane-backend:${APP_RELEASE:-stable}
     command: ./bin/docker-entrypoint-api.sh
     deploy:
@@ -122,6 +144,7 @@ services:
       - plane-mq
 
   worker:
+    restart: always
     image: makeplane/plane-backend:${APP_RELEASE:-stable}
     command: ./bin/docker-entrypoint-worker.sh
     deploy:
@@ -139,6 +162,7 @@ services:
       - plane-mq
 
   beat-worker:
+    restart: always
     image: makeplane/plane-backend:${APP_RELEASE:-stable}
     command: ./bin/docker-entrypoint-beat.sh
     deploy:
@@ -172,6 +196,7 @@ services:
 
   # Comment this if you already have a database running
   plane-db:
+    restart: always
     image: postgres:15.7-alpine
     command: postgres -c 'max_connections=1000'
     deploy:
@@ -184,6 +209,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   plane-redis:
+    restart: always
     image: valkey/valkey:7.2.11-alpine
     deploy:
       replicas: 1
@@ -193,6 +219,7 @@ services:
       - redisdata:/data
 
   plane-mq:
+    restart: always
     image: rabbitmq:3.13.6-management-alpine
     deploy:
       replicas: 1
@@ -205,6 +232,7 @@ services:
 
   # Comment this if you using any external s3 compatible storage
   plane-minio:
+    restart: always
     image: quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
     command: server /export --console-address ":9090"
     deploy:
@@ -218,6 +246,7 @@ services:
 
   # Comment this if you already have a reverse proxy running
   proxy:
+    restart: always
     image: makeplane/plane-proxy:${APP_RELEASE:-stable}
     deploy:
       replicas: 1
@@ -226,14 +255,9 @@ services:
     environment:
       <<: *proxy-env
     ports:
-      - target: 80
-        published: ${LISTEN_HTTP_PORT:-80}
-        protocol: tcp
-        mode: host
-      - target: 443
-        published: ${LISTEN_HTTPS_PORT:-443}
-        protocol: tcp
-        mode: host
+      - "${LISTEN_HTTP_PORT:-8090}:80"
+      - "10003:80"
+      - "${LISTEN_HTTPS_PORT:-8443}:443"
     volumes:
       - proxy_config:/config
       - proxy_data:/data
