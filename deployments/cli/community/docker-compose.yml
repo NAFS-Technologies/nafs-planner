@@ -68,7 +68,10 @@ services:
     volumes:
       # Caddy (preview release)
       - ./custom_branding/Caddyfile:/etc/caddy/Caddyfile:ro
-      - ./custom_branding/index.html:/usr/share/caddy/html/index.html:ro
+      # The built app now serves its own index.html (TaskFlow branding lives in
+      # apps/web source). Mounting the old custom index.html here makes it point at
+      # asset hashes the new build no longer ships -> blank page. See git history.
+      # - ./custom_branding/index.html:/usr/share/caddy/html/index.html:ro
       - ./custom_branding/site.webmanifest.json:/usr/share/caddy/html/site.webmanifest.json:ro
       - ./custom_branding/manifest.json:/usr/share/caddy/html/manifest.json:ro
       - ./custom_branding/favicon.ico:/usr/share/caddy/html/favicon.ico:ro
@@ -111,7 +114,7 @@ services:
       - ./custom_branding/assets/workspace-settings-DR_U2Mj7.js:/usr/share/caddy/html/assets/workspace-settings-DR_U2Mj7.js:ro
       - ./custom_branding/assets/workspace-settings-BcoE1c4x.js:/usr/share/caddy/html/assets/workspace-settings-BcoE1c4x.js:ro
       # Nginx (stable release fallback)
-      - ./custom_branding/index.html:/usr/share/nginx/html/index.html:ro
+      # - ./custom_branding/index.html:/usr/share/nginx/html/index.html:ro
       - ./custom_branding/site.webmanifest.json:/usr/share/nginx/html/site.webmanifest.json:ro
       - ./custom_branding/manifest.json:/usr/share/nginx/html/manifest.json:ro
       - ./custom_branding/favicon.ico:/usr/share/nginx/html/favicon.ico:ro
