@@ -11,17 +11,6 @@ interface TermsAndConditionsProps {
   authType?: EAuthModes;
 }
 
-const MESSAGES = {
-  [EAuthModes.SIGN_UP]: "By creating an account",
-  [EAuthModes.SIGN_IN]: "By signing in",
-} as const;
-
 export function TermsAndConditions({ authType = EAuthModes.SIGN_IN }: TermsAndConditionsProps) {
-  return (
-    <div className="flex items-center justify-center">
-      <p className="text-center text-13 whitespace-pre-line text-tertiary">
-        {MESSAGES[authType]}, you agree to your organization&apos;s applicable terms and privacy policy.
-      </p>
-    </div>
-  );
+  return null;
 }
