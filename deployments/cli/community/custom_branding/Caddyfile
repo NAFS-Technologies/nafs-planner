@@ -2,31 +2,24 @@
 	servers {
 		trusted_proxies static private_ranges
 	}
-
-	order rate_limit before file_server
 }
 
 :3000 {
 	root * /usr/share/caddy/html
 
-	# Per-client-IP rate limiting for static asset requests
-	rate_limit {
-		zone static {
-			key {client_ip}
-			events 300
-			window 1m
-		}
-	}
-
-	# Security & Cache-Busting headers
+	# Security headers
 	header {
 		X-Frame-Options "DENY"
 		X-Content-Type-Options "nosniff"
 		X-XSS-Protection "1; mode=block"
-		Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
+	}
+
+	# Ensure index.html is always fresh
+	@html path / /index.html
+	header @html {
+		Cache-Control "no-cache, no-store, must-revalidate"
 		Pragma "no-cache"
 		Expires "0"
-		Clear-Site-Data "\"cache\""
 	}
 
 	# SPA fallback
