@@ -2,8 +2,9 @@
 # ==============================================================================
 #  nafs-planner-start.sh
 #
-#  Pull the latest `main` from NAFS-Technologies/plane and redeploy the
-#  /var/www/nafs-planner stack (docker compose project: deployments/cli/community).
+#  Mirror NAFS-Technologies/plane `main` into `development` on
+#  NAFS-Technologies/nafs-planner, then redeploy the /var/www/nafs-planner stack
+#  (docker compose project: deployments/cli/community).
 #
 #  The script inspects what actually changed in the incoming commits and only
 #  rebuilds the images that need it, instead of always doing a full rebuild:
@@ -22,13 +23,17 @@
 #    bash nafs-planner-start.sh --build-all     rebuild every image, then recreate
 #    bash nafs-planner-start.sh --migrate       force Django migrations
 #    bash nafs-planner-start.sh --refresh-cache recreate web/proxy + check caching
+#    bash nafs-planner-start.sh --sync-only     only mirror plane/main into the
+#                                               deployment branch, no deploy
+#    bash nafs-planner-start.sh --no-sync       skip the mirror, deploy as-is
 #    bash nafs-planner-start.sh --no-pull       skip git, deploy current checkout
 #    bash nafs-planner-start.sh --no-cache      rebuild images without layer cache
 #    bash nafs-planner-start.sh --help
 #
 #  Environment overrides:
 #    REPO_DIR, BRANCH, HEALTH_URL, HEALTH_RETRIES, HEALTH_INTERVAL, BACKUP_DIR,
-#    DOCKERHUB_USER, APP_RELEASE, CDN_PURGE_URL, CDN_PURGE_TOKEN
+#    DOCKERHUB_USER, APP_RELEASE, CDN_PURGE_URL, CDN_PURGE_TOKEN,
+#    SOURCE_REMOTE, SOURCE_BRANCH
 # ==============================================================================
 
 set -Eeuo pipefail
@@ -36,7 +41,9 @@ set -Eeuo pipefail
 # ------------------------------------------------------------------ settings --
 REPO_DIR="${REPO_DIR:-/var/www/nafs-planner}"
 COMPOSE_DIR="$REPO_DIR/deployments/cli/community"
-BRANCH="${BRANCH:-main}"
+BRANCH="${BRANCH:-development}"
+SOURCE_REMOTE="${SOURCE_REMOTE:-plane}"
+SOURCE_BRANCH="${SOURCE_BRANCH:-main}"
 HEALTH_URL="${HEALTH_URL:-http://163.53.183.219:10003/}"
 HEALTH_RETRIES="${HEALTH_RETRIES:-40}"
 HEALTH_INTERVAL="${HEALTH_INTERVAL:-5}"
@@ -48,6 +55,8 @@ NO_CACHE=0
 FORCE_MIGRATE=0
 REFRESH_CACHE=0
 FULL=0
+NO_SYNC=0
+SYNC_ONLY=0
 
 # -------------------------------------------------------------------- output --
 if [[ -t 1 ]]; then
@@ -78,6 +87,8 @@ while [[ $# -gt 0 ]]; do
     --migrate)   FORCE_MIGRATE=1 ;;
     --refresh-cache) REFRESH_CACHE=1 ;;
     --full)      FULL=1 ;;
+    --sync-only) SYNC_ONLY=1 ;;
+    --no-sync)   NO_SYNC=1 ;;
     -h|--help)   usage ;;
     *)           die "unknown option: $1 (try --help)" ;;
   esac
@@ -145,10 +156,44 @@ declare -a CHANGED=()
 CONFIG_CHANGED=0
 BRANDING_ONLY=0
 
+# Mirror NAFS-Technologies/plane:$SOURCE_BRANCH into the deployment branch.
+# Fast-forward only: if the two have diverged it reports and leaves them alone.
+sync_from_source() {
+  local src="$SOURCE_REMOTE/$SOURCE_BRANCH" tip
+  git -C "$REPO_DIR" rev-parse --verify --quiet "$src" >/dev/null \
+    || { warn "$src not found - cannot mirror"; return 0; }
+  tip="$(git -C "$REPO_DIR" rev-parse "$src")"
+
+  if [[ "$tip" == "$(git -C "$REPO_DIR" rev-parse HEAD)" ]]; then
+    ok "$BRANCH already matches $src"
+    return 0
+  fi
+  if git -C "$REPO_DIR" merge-base --is-ancestor "$tip" HEAD; then
+    warn "local $BRANCH is ahead of $src - nothing to mirror"
+    return 0
+  fi
+  if ! git -C "$REPO_DIR" merge-base --is-ancestor HEAD "$tip"; then
+    warn "$BRANCH and $src have diverged - not mirroring automatically"
+    warn "resolve manually (git merge $src), then re-run"
+    return 0
+  fi
+
+  log "mirroring $src ${tip:0:9} -> local $BRANCH"
+  git -C "$REPO_DIR" merge --ff-only "$tip"
+
+  PUSH_OUT="$(git -C "$REPO_DIR" push origin "HEAD:refs/heads/$BRANCH" 2>&1)" && PUSH_OK=1 || PUSH_OK=0
+  printf '%s\n' "$PUSH_OUT" | sed 's/^/      /'
+  if [[ $PUSH_OK -eq 1 ]]; then
+    ok "pushed to origin/$BRANCH"
+  else
+    warn "push to origin/$BRANCH rejected - mirror is local only for now"
+  fi
+}
+
 if [[ $SKIP_PULL -eq 1 ]]; then
-  step "1/7  Pull  (skipped: --no-pull)"
+  step "1/7  Sync + pull  (skipped: --no-pull)"
 else
-  step "1/7  Pull  origin/$BRANCH"
+  step "1/7  Mirror $SOURCE_REMOTE/$SOURCE_BRANCH -> origin/$BRANCH"
   log "current commit: ${PREV_HEAD:0:9}"
 
   # variables.env and docker-compose.yml are tracked but also carry live
@@ -166,8 +211,24 @@ else
   fi
 
   git -C "$REPO_DIR" fetch --prune origin "$BRANCH"
-  git -C "$REPO_DIR" merge --ff-only FETCH_HEAD \
-    || die "fast-forward pull failed - resolve the local changes above, then re-run"
+  git -C "$REPO_DIR" fetch --prune "$SOURCE_REMOTE" "$SOURCE_BRANCH"
+
+  # First take anything already pushed straight to nafs-planner, so the mirror
+  # below starts from the freshest local state.
+  git -C "$REPO_DIR" merge --ff-only "origin/$BRANCH" \
+    || die "fast-forward to origin/$BRANCH failed - resolve the local changes above, then re-run"
+
+  if [[ $NO_SYNC -eq 1 ]]; then
+    log "mirror skipped (--no-sync)"
+  else
+    sync_from_source
+  fi
+
+  if [[ $SYNC_ONLY -eq 1 ]]; then
+    printf '\n'
+    ok "sync-only run finished - no deploy performed"
+    exit 0
+  fi
 
   NEW_HEAD="$(git -C "$REPO_DIR" rev-parse HEAD)"
   log "new commit:     ${NEW_HEAD:0:9}"
