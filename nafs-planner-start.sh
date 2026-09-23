@@ -145,7 +145,26 @@ log "image namespace: $DOCKERHUB_USER/plane-*:$APP_RELEASE"
 
 # compose helpers (variables.env is referenced relative to the compose dir)
 dc()     { ( cd "$COMPOSE_DIR" && $DOCKER_BIN compose --env-file variables.env "$@" ); }
-buildc() { ( cd "$COMPOSE_DIR" && $DOCKER_BIN compose -f build.yml --env-file variables.env "$@" ); }
+# NOTE: deployments/cli/community/build.yml resolves its build contexts
+# relative to its own directory and is off by one level ("../../" lands on
+# deployments/, not the repo root), so each image is built explicitly here.
+build_image() {
+  local svc="$1" ctx df
+  case "$svc" in
+    web)   ctx="$REPO_DIR";            df="apps/web/Dockerfile.web" ;;
+    space) ctx="$REPO_DIR";            df="apps/space/Dockerfile.space" ;;
+    admin) ctx="$REPO_DIR";            df="apps/admin/Dockerfile.admin" ;;
+    live)  ctx="$REPO_DIR";            df="apps/live/Dockerfile.live" ;;
+    api)   ctx="$REPO_DIR/apps/api";   df="Dockerfile.api" ;;
+    proxy) ctx="$REPO_DIR/apps/proxy"; df="Dockerfile.ce" ;;
+    *)     die "unknown build service: $svc" ;;
+  esac
+  local opts=()
+  [[ $NO_CACHE -eq 1 ]] && opts+=(--no-cache)
+  log "docker build -f $df -t $(image_of "$svc") ($ctx)"
+  # The Dockerfiles use `RUN --mount=type=cache`, which needs BuildKit.
+  DOCKER_BUILDKIT=1 $DOCKER_BIN build "${opts[@]}" -f "$ctx/$df" -t "$(image_of "$svc")" "$ctx"
+}
 
 image_of() {
   case "$1" in
@@ -364,14 +383,11 @@ step "3/7  Build images"
 if [[ ${#BUILD_SERVICES[@]} -eq 0 ]]; then
   ok "nothing to build"
 else
+  # sequential on purpose: this box has ~3.4 GB free and running four Node
+  # builds at once has caused OOM kills before.
   for svc in "${BUILD_SERVICES[@]}"; do
-    log "building $svc -> $(image_of "$svc")"
+    build_image "$svc"
   done
-  if [[ $NO_CACHE -eq 1 ]]; then
-    buildc build --no-cache "${BUILD_SERVICES[@]}"
-  else
-    buildc build "${BUILD_SERVICES[@]}"
-  fi
   ok "build finished"
 fi
 
