@@ -109,6 +109,17 @@ step "Preflight"
 [[ -f "$COMPOSE_DIR/build.yml" ]]  || die "missing $COMPOSE_DIR/build.yml"
 [[ -f "$COMPOSE_DIR/variables.env" ]] || die "missing $COMPOSE_DIR/variables.env"
 
+# The deploy branch and the branch you happen to be sitting on are not always
+# the same - switch (only with a clean tree) instead of deploying the wrong one.
+CURRENT_BRANCH="$(git -C "$REPO_DIR" symbolic-ref --quiet --short HEAD || true)"
+if [[ -n "$CURRENT_BRANCH" && "$CURRENT_BRANCH" != "$BRANCH" ]]; then
+  if [[ -n "$(git -C "$REPO_DIR" status --porcelain --untracked-files=no)" ]]; then
+    die "on '$CURRENT_BRANCH' with local changes - commit or stash first (deploy branch is '$BRANCH')"
+  fi
+  printf '%s\n' "  switching '$CURRENT_BRANCH' -> '$BRANCH' for deployment"
+  git -C "$REPO_DIR" checkout "$BRANCH"
+fi
+
 if docker info >/dev/null 2>&1; then
   DOCKER_BIN=docker
 elif sudo -n docker info >/dev/null 2>&1; then
@@ -190,6 +201,22 @@ sync_from_source() {
   fi
 }
 
+# Server-side commits on the deployment branch also need to reach nafs-planner.
+push_if_ahead() {
+  local head origin_ref
+  git -C "$REPO_DIR" rev-parse --verify --quiet "origin/$BRANCH" >/dev/null || return 0
+  head="$(git -C "$REPO_DIR" rev-parse HEAD)"
+  origin_ref="$(git -C "$REPO_DIR" rev-parse "origin/$BRANCH")"
+
+  [[ "$head" == "$origin_ref" ]] && return 0
+  git -C "$REPO_DIR" merge-base --is-ancestor "$origin_ref" HEAD || return 0
+
+  log "local $BRANCH is ahead of origin/$BRANCH - pushing"
+  PUSH_OUT="$(git -C "$REPO_DIR" push origin "HEAD:refs/heads/$BRANCH" 2>&1)" && PUSH_OK=1 || PUSH_OK=0
+  printf '%s\n' "$PUSH_OUT" | sed 's/^/      /'
+  if [[ $PUSH_OK -eq 1 ]]; then ok "origin/$BRANCH updated"; else warn "push to origin/$BRANCH rejected"; fi
+}
+
 if [[ $SKIP_PULL -eq 1 ]]; then
   step "1/7  Sync + pull  (skipped: --no-pull)"
 else
@@ -223,6 +250,7 @@ else
   else
     sync_from_source
   fi
+  push_if_ahead
 
   if [[ $SYNC_ONLY -eq 1 ]]; then
     printf '\n'
