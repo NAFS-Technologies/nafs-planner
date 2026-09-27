@@ -9,13 +9,14 @@ import { ArrowRight, Check, Layers, LockKeyhole } from "lucide-react";
 import { AuthRoot } from "@/components/account/auth-forms/auth-root";
 import type { EAuthModes } from "@/helpers/authentication.helper";
 import { AuthFooter } from "./footer";
-import { AuthHeader } from "./header";
+import { AuthHeader, AuthHeaderBase } from "./header";
 
 type AuthBaseProps = {
   authType: EAuthModes;
+  children?: React.ReactNode;
 };
 
-export function AuthBase({ authType }: AuthBaseProps) {
+export function AuthBase({ authType, children }: AuthBaseProps) {
   return (
     <div
       className="relative z-10 flex h-screen w-full flex-col overflow-y-auto bg-[#f8fafc] text-[#0f172a]"
@@ -24,7 +25,7 @@ export function AuthBase({ authType }: AuthBaseProps) {
           "radial-gradient(circle at 0% 15%, #ccfbf1 0, transparent 28%), radial-gradient(circle at 100% 85%, #cffafe 0, transparent 28%)",
       }}
     >
-      <AuthHeader type={authType} />
+      {children ? <AuthHeaderBase pageTitle="Reset password" /> : <AuthHeader type={authType} />}
       <div className="relative mx-auto grid w-full max-w-[76rem] flex-1 items-center gap-6 px-4 py-5 sm:px-6 lg:grid-cols-[7fr_5fr] lg:gap-10 lg:px-8 lg:py-12">
         <aside className="relative order-2 overflow-hidden rounded-2xl bg-linear-to-br from-[#0b8279] via-[#0f766e] to-[#115e59] p-4 text-white shadow-xl shadow-[#115e59]/15 sm:p-6 lg:order-1 lg:rounded-3xl lg:p-10 xl:p-12">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold text-white lg:mb-8 lg:py-1.5 lg:text-[12px]">
@@ -100,12 +101,15 @@ export function AuthBase({ authType }: AuthBaseProps) {
           className="order-1 mx-auto flex w-full flex-col rounded-3xl border border-[#e2e8f0] bg-white p-6 text-[#0f172a] shadow-[0_20px_40px_-15px_rgba(15,23,42,0.1)] sm:p-8 lg:order-2 lg:p-10 [&_h1]:text-[#0f172a] [&_h1]:text-[26px] lg:[&_h1]:text-[30px] [&_p]:text-[#475569] [&_label]:text-[#334155] [&_input]:text-[#0f172a] [&_input]:placeholder:text-[#475569] [&_button:not([type=submit])]:min-h-6 [&_button:not([type=submit])]:min-w-6 [&_button[type=submit]]:min-h-12 [&_button[type=submit]]:rounded-xl [&_button[type=submit]]:bg-[#0f766e] [&_button[type=submit]]:text-white [&_button[type=submit]:hover]:bg-[#115e59] [&_button[type=submit]:disabled]:bg-[#e2e8f0] [&_button[type=submit]:disabled]:text-[#475569] [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-offset-4 [&_button:focus-visible]:outline-[#0f766e] [&_input:focus-visible]:outline-2 [&_input:focus-visible]:outline-offset-2 [&_input:focus-visible]:outline-[#0f766e] [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-4 [&_a:focus-visible]:outline-[#0f766e] [&_:focus-visible]:[outline-style:solid]!"
         >
           <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-[#99f6e4] bg-[#f0fdfa] px-3 py-1 text-[12px] font-medium text-[#115e59]">
-            <span className="size-1.5 rounded-full bg-[#0f766e]" aria-hidden="true" /> Workspace login
+            <span className="size-1.5 rounded-full bg-[#0f766e]" aria-hidden="true" />
+            {children ? "Account recovery" : "Workspace login"}
           </div>
-          <AuthRoot authMode={authType} />
+          {children ?? <AuthRoot authMode={authType} />}
           <div className="mt-6 flex items-center justify-center gap-2 border-t border-[#e2e8f0] pt-5 text-center text-[12px] leading-5 text-[#475569]">
-            <LockKeyhole className="size-4 shrink-0 text-[#0f766e]" aria-hidden="true" /> Sign in with your work email
-            to join your team.
+            <LockKeyhole className="size-4 shrink-0 text-[#0f766e]" aria-hidden="true" />
+            {children
+              ? "Use your work email to recover your account."
+              : "Sign in with your work email to join your team."}
           </div>
         </section>
       </div>

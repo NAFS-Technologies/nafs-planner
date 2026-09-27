@@ -5,6 +5,7 @@
  */
 
 import { observer } from "mobx-react";
+import { ArrowLeft, Mail } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
@@ -23,8 +24,7 @@ import useTimer from "@/hooks/use-timer";
 // services
 import { AuthService } from "@/services/auth.service";
 // local components
-import { FormContainer } from "./common/container";
-import { AuthFormHeader } from "./common/header";
+import { AuthHeaderBase } from "./auth-header";
 
 type TForgotPasswordFormValues = {
   email: string;
@@ -81,12 +81,12 @@ export const ForgotPasswordForm = observer(function ForgotPasswordForm() {
   };
 
   return (
-    <FormContainer>
-      <AuthFormHeader title="Reset password" description="Regain access to your account." />
+    <div className="flex w-full flex-col gap-6">
+      <AuthHeaderBase header="Reset your password" subHeader="Enter your work email and we’ll send you a reset link." />
       <form onSubmit={handleSubmit(handleForgotPassword)} className="space-y-4">
-        <div className="space-y-1">
-          <label className="text-13 font-medium text-tertiary" htmlFor="email">
-            {t("auth.common.email.label")}
+        <div className="space-y-2">
+          <label className="text-[12px] font-semibold tracking-wide text-tertiary uppercase" htmlFor="email">
+            Work email
           </label>
           <Controller
             control={control}
@@ -97,7 +97,11 @@ export const ForgotPasswordForm = observer(function ForgotPasswordForm() {
             }}
             render={({ field: { value, onChange, ref } }) => (
               <Field name="email" invalid={Boolean(errors.email)}>
-                <InputGroup size="2xl">
+                <InputGroup
+                  size="2xl"
+                  className="min-h-12 rounded-xl bg-[#f8fafc]! text-[#0f172a] [&:not(:focus-within):not(:has([data-invalid]))]:border-[#64748b] [&:focus-within:not(:has([data-invalid]))]:border-[#0f766e] [&:focus-within:not(:has([data-invalid]))]:ring-[#0f766e]/20"
+                >
+                  <Mail className="size-4 shrink-0 text-[#64748b]" aria-hidden="true" />
                   <Input
                     size="2xl"
                     id="email"
@@ -107,13 +111,19 @@ export const ForgotPasswordForm = observer(function ForgotPasswordForm() {
                     onChange={onChange}
                     ref={ref}
                     placeholder={t("auth.common.email.placeholder")}
-                    autoComplete="off"
+                    autoComplete="email"
+                    aria-describedby={errors.email ? "recovery-email-error" : undefined}
                     disabled={resendTimerCode > 0}
                   />
                 </InputGroup>
               </Field>
             )}
           />
+          {errors.email && (
+            <p id="recovery-email-error" role="alert" className="text-[12px] text-danger-primary">
+              {errors.email.message}
+            </p>
+          )}
           {resendTimerCode > 0 && (
             <p className="flex w-full items-start gap-1 px-1 text-11 font-medium text-success-primary">
               <TickCircleOutline height={12} width={12} className="mt-0.5" />
@@ -133,10 +143,11 @@ export const ForgotPasswordForm = observer(function ForgotPasswordForm() {
             ? t("auth.common.resend_in", { seconds: resendTimerCode })
             : t("auth.forgot_password.send_reset_link")}
         </Button>
-        <Link href="/" className={cn("w-full", getButtonStyling("link", "lg"))}>
+        <Link href="/" className={cn("min-h-11 w-full text-[#0f766e]!", getButtonStyling("link", "lg"))}>
+          <ArrowLeft className="mr-2 size-4" aria-hidden="true" />
           {t("auth.common.back_to_sign_in")}
         </Link>
       </form>
-    </FormContainer>
+    </div>
   );
 });
