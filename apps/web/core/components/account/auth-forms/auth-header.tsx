@@ -27,16 +27,16 @@ type TAuthHeader = {
 const Titles = {
   [EAuthModes.SIGN_IN]: {
     [EAuthSteps.EMAIL]: {
-      header: "Work in all dimensions.",
-      subHeader: "Welcome back to Taskflow.",
+      header: "Welcome back",
+      subHeader: "Sign in to your Taskflow workspace.",
     },
     [EAuthSteps.PASSWORD]: {
-      header: "Work in all dimensions.",
-      subHeader: "Welcome back to Taskflow.",
+      header: "Welcome back",
+      subHeader: "Sign in to your Taskflow workspace.",
     },
     [EAuthSteps.UNIQUE_CODE]: {
-      header: "Work in all dimensions.",
-      subHeader: "Welcome back to Taskflow.",
+      header: "Welcome back",
+      subHeader: "Sign in to your Taskflow workspace.",
     },
   },
   [EAuthModes.SIGN_UP]: {
@@ -116,9 +116,9 @@ type TAuthHeaderBase = {
 
 export function AuthHeaderBase(props: TAuthHeaderBase) {
   return (
-    <div className="flex flex-col gap-1">
-      <span className="text-h4-semibold text-primary">{props.header}</span>
-      <span className="text-h4-semibold text-placeholder">{props.subHeader}</span>
+    <div className="flex flex-col gap-3">
+      <h1 className="text-[2rem] leading-tight font-semibold tracking-tight text-primary">{props.header}</h1>
+      <p className="text-16 leading-relaxed text-secondary">{props.subHeader}</p>
     </div>
   );
 }

@@ -74,7 +74,7 @@ export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailFo
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t("auth.common.email.placeholder")}
-              autoComplete="off"
+              autoComplete="email"
               autoFocus
               ref={inputRef}
             />
@@ -101,7 +101,7 @@ export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailFo
           </p>
         )}
       </div>
-      <Button type="submit" variant="primary" className="w-full" size="xl" disabled={isButtonDisabled}>
+      <Button type="submit" variant="primary" className="min-h-11 w-full" size="xl" disabled={isButtonDisabled}>
         {isSubmitting ? <Spinner height="20px" width="20px" /> : t("common.continue")}
       </Button>
     </form>

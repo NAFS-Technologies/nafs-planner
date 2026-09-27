@@ -150,15 +150,15 @@ export const AuthRoot = observer(function AuthRoot(props: TAuthRoot) {
           currentAuthMode={currentAuthMode}
         />
       )}
-      <TermsAndConditions authType={authMode} />
+      {authMode === EAuthModes.SIGN_UP && <TermsAndConditions authType={authMode} />}
     </AuthContainer>
   );
 });
 
 function AuthContainer({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mt-10 flex w-full flex-grow flex-col items-center justify-center py-6">
-      <div className="relative flex w-full max-w-[22.5rem] flex-col gap-6">{children}</div>
+    <div className="flex w-full flex-col items-center justify-center py-6">
+      <div className="relative flex w-full max-w-[26rem] flex-col gap-8">{children}</div>
     </div>
   );
 }
