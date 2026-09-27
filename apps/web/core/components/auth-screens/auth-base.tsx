@@ -20,16 +20,16 @@ export function AuthBase({ authType }: AuthBaseProps) {
     <div className="relative z-10 flex h-screen w-full flex-col overflow-y-auto bg-canvas p-5 sm:p-8 lg:p-10">
       <AuthHeader type={authType} />
       <div className="mx-auto grid w-full max-w-7xl flex-1 items-center gap-12 py-10 lg:grid-cols-2 lg:gap-20 lg:py-14">
-        <aside className="relative hidden overflow-hidden rounded-3xl border border-subtle bg-accent-primary/5 p-10 lg:block xl:p-12">
+        <aside className="relative hidden overflow-hidden rounded-3xl border border-subtle bg-[#18BBA8] p-10 lg:block xl:p-12">
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-accent-primary/20 bg-surface-1 px-3 py-1.5 text-12 font-medium text-accent-primary">
             <Layers className="size-4" /> A clearer way to work
           </div>
-          <h2 className="max-w-md text-[2.5rem] leading-[1.15] font-semibold tracking-tight text-primary xl:text-[3rem]">
+          <h2 className="max-w-md text-[2.5rem] leading-[1.15] font-semibold tracking-tight text-[#092d36] xl:text-[3rem]">
             Great work starts
             <br />
             with a clear plan.
           </h2>
-          <p className="mt-5 max-w-sm text-16 leading-relaxed text-secondary">
+          <p className="mt-5 max-w-sm text-16 leading-relaxed text-[#092d36]">
             Bring your projects, priorities, and people together. Keep your team focused on what comes next.
           </p>
           {/* ponytail: static illustration; no live workspace data needed on the login page. */}
@@ -76,14 +76,14 @@ export function AuthBase({ authType }: AuthBaseProps) {
               ))}
             </div>
           </div>
-          <div className="mt-8 flex items-center gap-2 text-13 font-medium text-secondary">
+          <div className="mt-8 flex items-center gap-2 text-13 font-medium text-[#092d36]">
             Less friction. More momentum.
             <ArrowRight className="size-4 text-accent-primary" />
           </div>
         </aside>
         <section
           aria-label="Account access"
-          className="mx-auto flex w-full max-w-[28rem] flex-col rounded-2xl border border-subtle bg-surface-1 px-6 py-8 sm:px-9"
+          className="mx-auto flex w-full max-w-[28rem] flex-col rounded-2xl border border-subtle bg-[#044482] px-6 py-8 text-white sm:px-9 [&_a]:text-white [&_h1]:text-white [&_label]:text-white [&_p]:text-white [&_button]:min-h-6 [&_button]:min-w-6 [&_button[type=submit]]:border [&_button[type=submit]]:border-white [&_button[type=submit]]:text-white [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-offset-4 [&_button:focus-visible]:outline-white [&_input:focus-visible]:outline-2 [&_input:focus-visible]:outline-offset-4 [&_input:focus-visible]:outline-white [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-4 [&_a:focus-visible]:outline-white [&_button[type=submit]:disabled]:bg-white/15 [&_button[type=submit]:disabled]:text-white/60"
         >
           <AuthRoot authMode={authType} />
         </section>
