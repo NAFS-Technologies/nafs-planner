@@ -16,6 +16,17 @@ from plane.utils.exception_logger import log_exception
 from storages.backends.s3boto3 import S3Boto3Storage
 
 
+def preview_content_type(attributes):
+    """Allow browser-safe previews; unknown and active content downloads."""
+    mime = (attributes.get("type") or "").split(";")[0].strip().lower()
+    safe = {
+        "application/pdf", "image/png", "image/jpeg", "image/gif", "image/webp",
+        "image/bmp", "text/plain", "audio/mpeg", "audio/ogg", "audio/wav",
+        "video/mp4", "video/webm", "video/ogg",
+    }
+    return mime if mime in safe else None
+
+
 class S3Storage(S3Boto3Storage):
     def url(self, name, parameters=None, expire=None, http_method=None):
         return name
@@ -116,6 +127,7 @@ class S3Storage(S3Boto3Storage):
         http_method="GET",
         disposition="inline",
         filename=None,
+        content_type=None,
     ):
         """Generate a presigned URL to share an S3 object"""
         if expiration is None:
@@ -128,6 +140,7 @@ class S3Storage(S3Boto3Storage):
                     "Bucket": self.aws_storage_bucket_name,
                     "Key": str(object_name),
                     "ResponseContentDisposition": content_disposition,
+                    **({"ResponseContentType": content_type} if content_type else {}),
                 },
                 ExpiresIn=expiration,
                 HttpMethod=http_method,

@@ -23,7 +23,7 @@ from plane.app.serializers import IssueAttachmentSerializer
 from plane.db.models import FileAsset, Workspace
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.app.permissions import allow_permission, ROLE
-from plane.settings.storage import S3Storage
+from plane.settings.storage import S3Storage, preview_content_type
 from plane.utils.path_validator import sanitize_filename
 from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
 from plane.utils.host import base_host
@@ -185,7 +185,8 @@ class IssueAttachmentV2Endpoint(BaseAPIView):
             storage = S3Storage(request=request)
             presigned_url = storage.generate_presigned_url(
                 object_name=asset.asset.name,
-                disposition="attachment",
+                disposition="inline" if preview_content_type(asset.attributes) else "attachment",
+                content_type=preview_content_type(asset.attributes),
                 filename=asset.attributes.get("name"),
             )
             return HttpResponseRedirect(presigned_url)

@@ -24,5 +24,11 @@ try:
  client=S3Storage().s3_client
  content=client.get_object(Bucket=storage.aws_storage_bucket_name,Key=key)['Body'].read()
  assert content==body
- print('Upload and downloaded contents verified.')
+ for disposition in ['inline','attachment']:
+  url=storage.generate_presigned_url(key,disposition=disposition,filename='preview-check.pdf',content_type='application/pdf')
+  preview=requests.get(url,timeout=20)
+  assert preview.status_code==200 and preview.content==body
+  assert preview.headers.get('Content-Disposition','').startswith(disposition), preview.headers.get('Content-Disposition')
+  assert preview.headers.get('Content-Type','').split(';')[0]=='application/pdf',preview.headers.get('Content-Type')
+ print('Upload, preview/download response headers and file contents verified.')
 finally:S3Storage().s3_client.delete_object(Bucket=storage.aws_storage_bucket_name,Key=key)
