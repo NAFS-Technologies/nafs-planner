@@ -6,7 +6,6 @@
 
 import { useState } from "react";
 import { observer } from "mobx-react";
-import Link from "next/link";
 import useSWR from "swr";
 import { LoadingOutline as LoaderIcon } from "@makeplane/propel/icons";
 // types
@@ -130,16 +129,6 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
                   You can&apos;t yet delete workspaces and you can only go to the workspace if you are an Admin or a
                   Member.
                 </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="primary"
-                  size="sm"
-                  stretch="auto"
-                  nativeButton={false}
-                  render={<Link href="/workspace/create" />}
-                  label="Create workspace"
-                />
               </div>
             </div>
             <div className="flex flex-col gap-4 py-2">
