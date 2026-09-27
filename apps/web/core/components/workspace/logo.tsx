@@ -23,7 +23,7 @@ export const WorkspaceLogo = observer(function WorkspaceLogo(props: Props) {
     <div
       className={cn(
         `relative grid h-6 w-6 flex-shrink-0 place-items-center uppercase ${
-          !props.logo && "rounded-md bg-accent-primary text-on-color"
+          !props.logo && "rounded-md"
         } ${props.classNames ? props.classNames : ""}`
       )}
     >
@@ -34,7 +34,7 @@ export const WorkspaceLogo = observer(function WorkspaceLogo(props: Props) {
           alt={t("aria_labels.projects_sidebar.workspace_logo")}
         />
       ) : (
-        (props.name?.[0] ?? "...")
+        <img src="/taskflow-icon.svg" alt="Taskflow" className="h-full w-full object-contain" />
       )}
     </div>
   );

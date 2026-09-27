@@ -31,9 +31,9 @@ export function AuthBase({ authType, children }: AuthBaseProps) {
         <Link
           href="/"
           aria-label="Taskflow home"
-          className="tracking-widest absolute top-6 left-6 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[12px] font-bold text-black lg:top-10 lg:left-10 lg:bg-transparent lg:p-0 lg:text-white"
+          className="tracking-widest absolute top-6 left-6 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[12px] font-bold text-black lg:top-10 lg:left-10 lg:bg-white/90 lg:text-white"
         >
-          <span aria-hidden="true" className="size-2.5 rounded-full bg-[#005db2] lg:bg-white" /> TASKFLOW
+          <img src="/taskflow-logo.svg" alt="Taskflow" className="h-10 w-auto" />
         </Link>
         <div className="absolute right-6 bottom-6 left-6 text-white lg:right-10 lg:bottom-10 lg:left-10">
           <div className="mb-4 h-1 w-8 rounded-full bg-[#62aef0] lg:h-px lg:bg-white/50" />
@@ -54,7 +54,7 @@ export function AuthBase({ authType, children }: AuthBaseProps) {
           aria-label="Taskflow home"
           className="tracking-widest mx-auto hidden w-full max-w-[400px] items-center gap-2 text-[12px] font-bold text-black lg:flex"
         >
-          <span aria-hidden="true" className="size-2.5 rounded-full bg-[#005db2]" /> TASKFLOW
+          <img src="/taskflow-logo.svg" alt="Taskflow" className="h-10 w-auto" />
         </Link>
         <section
           aria-label="Account access"

@@ -158,8 +158,8 @@ export const WorkspaceDetails = observer(function WorkspaceDetails() {
                   />
                 </div>
               ) : (
-                <div className="relative grid size-14 place-items-center rounded-md bg-accent-primary text-24 text-on-color uppercase">
-                  {currentWorkspace?.name?.charAt(0) ?? "N"}
+                <div className="relative grid size-14 place-items-center rounded-md">
+                  <img src="/taskflow-icon.svg" alt="Taskflow" className="size-full object-contain" />
                 </div>
               )}
             </button>
