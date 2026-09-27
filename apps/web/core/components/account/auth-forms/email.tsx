@@ -7,6 +7,8 @@
 import type { FormEvent } from "react";
 import { useMemo, useRef, useState } from "react";
 import { observer } from "mobx-react";
+import { ArrowRight, Mail } from "lucide-react";
+import Link from "next/link";
 // icons
 import { CloseCircleOutline, WarningCircleOutline } from "@makeplane/propel/icons";
 // plane imports
@@ -52,13 +54,14 @@ export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailFo
 
   return (
     <form onSubmit={handleFormSubmit} className="space-y-4">
-      <div className="space-y-1">
-        <label htmlFor="email" className="text-13 font-medium text-tertiary">
-          {t("auth.common.email.label")}
+      <div className="space-y-2">
+        <label htmlFor="email" className="text-[12px] font-semibold tracking-wide text-tertiary uppercase">
+          Work email
         </label>
         <Field name="email" invalid={!isFocused && Boolean(emailError?.email)}>
           <InputGroup
             size="2xl"
+            className="min-h-12 rounded-xl bg-[#f8fafc]! text-[#0f172a] [&:not(:focus-within):not(:has([data-invalid]))]:border-[#64748b] [&:focus-within:not(:has([data-invalid]))]:border-[#0f766e] [&:focus-within:not(:has([data-invalid]))]:ring-[#0f766e]/20"
             onFocus={() => {
               setIsFocused(true);
             }}
@@ -66,6 +69,7 @@ export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailFo
               setIsFocused(false);
             }}
           >
+            <Mail className="size-4 shrink-0 text-[#64748b]" aria-hidden="true" />
             <Input
               size="2xl"
               id="email"
@@ -75,7 +79,7 @@ export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailFo
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t("auth.common.email.placeholder")}
               autoComplete="email"
-              autoFocus
+              aria-describedby={emailError?.email && !isFocused ? "email-error" : undefined}
               ref={inputRef}
             />
             {email.length > 0 && (
@@ -85,7 +89,7 @@ export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailFo
                   setEmail("");
                   inputRef.current?.focus();
                 }}
-                className="grid size-5 place-items-center"
+                className="grid size-6 place-items-center"
                 aria-label={t("aria_labels.auth_forms.clear_email")}
                 tabIndex={-1}
               >
@@ -95,14 +99,30 @@ export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailFo
           </InputGroup>
         </Field>
         {emailError?.email && !isFocused && (
-          <p className="flex items-center gap-1 px-0.5 text-11 text-danger-primary">
+          <p id="email-error" role="alert" className="flex items-center gap-1 px-0.5 text-11 text-danger-primary">
             <WarningCircleOutline height={12} width={12} />
             {t(emailError.email)}
           </p>
         )}
       </div>
+      <div className="flex items-center justify-between gap-3 text-[12px]">
+        <span className="text-[#475569]">Use your work email</span>
+        <Link
+          href="/accounts/forgot-password"
+          className="inline-flex min-h-6 items-center font-semibold text-[#0f766e] hover:underline"
+        >
+          Need help?
+        </Link>
+      </div>
       <Button type="submit" variant="primary" className="min-h-11 w-full" size="xl" disabled={isButtonDisabled}>
-        {isSubmitting ? <Spinner height="20px" width="20px" /> : t("common.continue")}
+        {isSubmitting ? (
+          <Spinner height="20px" width="20px" />
+        ) : (
+          <>
+            {t("common.continue")}
+            <ArrowRight className="ml-2 size-4" aria-hidden="true" />
+          </>
+        )}
       </Button>
     </form>
   );

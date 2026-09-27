@@ -69,8 +69,12 @@ export function AuthHeaderBase(props: TAuthHeaderBase) {
   return (
     <>
       <PageHead title={pageTitle + " - Taskflow"} />
-      <div className="sticky top-0 flex w-full flex-shrink-0 items-center justify-between gap-6">
-        <Link href="/">
+      <div className="flex w-full flex-shrink-0 items-center justify-between gap-6 border-b border-[#e2e8f0] bg-white/80 px-6 py-5 sm:px-10 lg:px-12">
+        <Link
+          href="/"
+          aria-label="Taskflow home"
+          className="rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0f766e]"
+        >
           <PlaneLockup height={24} width={125} className="text-primary" />
         </Link>
         {additionalAction}
