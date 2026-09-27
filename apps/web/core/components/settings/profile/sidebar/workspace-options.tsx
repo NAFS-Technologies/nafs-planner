@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-import { MailOutline, PlusCircleOutline } from "@makeplane/propel/icons";
+import { MailOutline } from "@makeplane/propel/icons";
 import { observer } from "mobx-react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
@@ -35,13 +35,6 @@ export const ProfileSettingsSidebarWorkspaceOptions = observer(function ProfileS
           />
         ))}
         <div className="mt-1.5">
-          <SettingsSidebarItem
-            as="link"
-            href="/create-workspace/"
-            icon={PlusCircleOutline}
-            label={t("create_workspace")}
-            isActive={false}
-          />
           <SettingsSidebarItem
             as="link"
             href="/invitations/"

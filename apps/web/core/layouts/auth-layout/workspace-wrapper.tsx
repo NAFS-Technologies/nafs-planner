@@ -188,11 +188,7 @@ export const WorkspaceAuthWrapper = observer(function WorkspaceAuthWrapper(props
                   Visit Profile
                 </Link>
               )}
-              {allWorkspaces && allWorkspaces.length === 0 && (
-                <Link href="/create-workspace/" className={cn(getButtonStyling("secondary", "base"))}>
-                  Create new workspace
-                </Link>
-              )}
+
             </div>
           </div>
 
@@ -221,11 +217,7 @@ export const WorkspaceAuthWrapper = observer(function WorkspaceAuthWrapper(props
                   <Button variant="secondary">Check pending invites</Button>
                 </span>
               </Link>
-              <Link href="/create-workspace">
-                <span>
-                  <Button variant="primary">Create new workspace</Button>
-                </span>
-              </Link>
+
             </div>
           </div>
         </div>

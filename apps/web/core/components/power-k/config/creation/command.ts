@@ -4,7 +4,6 @@
  * See the LICENSE file for details.
  */
 
-import { SquarePlus } from "lucide-react";
 import {
   CreateFolderOutline,
   CyclesOutline,
@@ -21,7 +20,6 @@ import type { TPowerKCommandConfig, TPowerKContext } from "@/components/power-k/
 import { useCommandPalette } from "@/hooks/store/use-command-palette";
 import { useProject } from "@/hooks/store/use-project";
 import { useUser } from "@/hooks/store/user";
-import { useInstance } from "@/hooks/store/use-instance";
 
 export type TPowerKCreationCommandKeys =
   | "create_work_item"
@@ -29,15 +27,13 @@ export type TPowerKCreationCommandKeys =
   | "create_view"
   | "create_cycle"
   | "create_module"
-  | "create_project"
-  | "create_workspace";
+  | "create_project";
 
 /**
  * Creation commands - Create any entity in the app
  */
 export const usePowerKCreationCommandsRecord = (): Record<TPowerKCreationCommandKeys, TPowerKCommandConfig> => {
   // store
-  const { config } = useInstance();
   const {
     canPerformAnyCreateAction,
     permission: { allowPermissions },
@@ -64,7 +60,6 @@ export const usePowerKCreationCommandsRecord = (): Record<TPowerKCreationCommand
       ctx.params.workspaceSlug?.toString(),
       ctx.params.projectId?.toString()
     );
-  const isWorkspaceCreationDisabled = config?.is_workspace_creation_disabled ?? false;
 
   const getProjectDetails = (ctx: TPowerKContext) =>
     ctx.params.projectId ? getPartialProjectById(ctx.params.projectId.toString()) : undefined;
@@ -146,17 +141,6 @@ export const usePowerKCreationCommandsRecord = (): Record<TPowerKCreationCommand
       action: () => toggleCreateProjectModal(true),
       isEnabled: () => Boolean(canCreateProject),
       isVisible: () => Boolean(canCreateProject),
-      closeOnSelect: true,
-    },
-    create_workspace: {
-      id: "create_workspace",
-      type: "action",
-      group: "create",
-      i18n_title: "power_k.creation_actions.create_workspace",
-      icon: SquarePlus,
-      action: (ctx) => ctx.router.push("/create-workspace"),
-      isEnabled: () => Boolean(!isWorkspaceCreationDisabled),
-      isVisible: () => Boolean(!isWorkspaceCreationDisabled),
       closeOnSelect: true,
     },
   };

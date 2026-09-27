@@ -26,12 +26,11 @@ import { WorkspaceService } from "@/services/workspace.service";
 type Props = {
   invitations: IWorkspaceMemberInvitation[];
   handleNextStep: () => Promise<void>;
-  handleCurrentViewChange: () => void;
 };
 const workspaceService = new WorkspaceService();
 
 export function Invitations(props: Props) {
-  const { invitations, handleNextStep, handleCurrentViewChange } = props;
+  const { invitations, handleNextStep } = props;
   // states
   const [isJoiningWorkspaces, setIsJoiningWorkspaces] = useState(false);
   const [invitationsRespond, setInvitationsRespond] = useState<string[]>([]);
@@ -107,22 +106,8 @@ export function Invitations(props: Props) {
       >
         {isJoiningWorkspaces ? <Spinner height="20px" width="20px" /> : "Continue to workspace"}
       </Button>
-      <div className="mx-auto mt-4 flex items-center sm:w-96">
-        <hr className="w-full border-strong" />
-        <p className="mx-3 flex-shrink-0 text-center text-13 text-placeholder">or</p>
-        <hr className="w-full border-strong" />
-      </div>
-      <Button
-        variant="ghost"
-        size="xl"
-        className="w-full bg-surface-2 text-14"
-        onClick={handleCurrentViewChange}
-        disabled={isJoiningWorkspaces}
-      >
-        Create your own workspace
-      </Button>
     </div>
   ) : (
-    <div>No Invitations found</div>
+    <div>No pending invitations. Ask your workspace administrator to invite you.</div>
   );
 }

@@ -25,12 +25,11 @@ import { CommonOnboardingHeader } from "../common";
 type Props = {
   invitations: IWorkspaceMemberInvitation[];
   handleNextStep: () => Promise<void>;
-  handleCurrentViewChange: () => void;
 };
 const workspaceService = new WorkspaceService();
 
 export function WorkspaceJoinInvitesStep(props: Props) {
-  const { invitations, handleNextStep, handleCurrentViewChange } = props;
+  const { invitations, handleNextStep } = props;
   // states
   const [isJoiningWorkspaces, setIsJoiningWorkspaces] = useState(false);
   const [invitationsRespond, setInvitationsRespond] = useState<string[]>([]);
@@ -68,7 +67,7 @@ export function WorkspaceJoinInvitesStep(props: Props) {
 
   return invitations && invitations.length > 0 ? (
     <div className="flex flex-col gap-10">
-      <CommonOnboardingHeader title="Join invites or create a workspace" description="All your work — unified." />
+      <CommonOnboardingHeader title="Join workspace invitations" description="All your work — unified." />
       <div className="flex flex-col gap-3">
         {invitations &&
           invitations.length > 0 &&
@@ -109,18 +108,9 @@ export function WorkspaceJoinInvitesStep(props: Props) {
         >
           {isJoiningWorkspaces ? <Spinner height="20px" width="20px" /> : "Continue"}
         </Button>
-        <Button
-          variant="ghost"
-          size="xl"
-          className="w-full"
-          onClick={handleCurrentViewChange}
-          disabled={isJoiningWorkspaces}
-        >
-          Create new workspace
-        </Button>
       </div>
     </div>
   ) : (
-    <div>No Invitations found</div>
+    <div>No pending invitations. Ask your workspace administrator to invite you.</div>
   );
 }

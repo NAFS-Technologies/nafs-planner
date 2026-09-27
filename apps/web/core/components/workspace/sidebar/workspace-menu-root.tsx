@@ -8,7 +8,7 @@ import { Fragment, useState, useEffect } from "react";
 import { observer } from "mobx-react";
 import Link from "next/link";
 // icons
-import { ChevronDownOutline, LogOutOutline, MailOutline, PlusCircleOutline } from "@makeplane/propel/icons";
+import { ChevronDownOutline, LogOutOutline, MailOutline } from "@makeplane/propel/icons";
 // ui
 import { Menu, Transition } from "@headlessui/react";
 // plane imports
@@ -23,7 +23,6 @@ import { AppSidebarItem } from "@/components/sidebar/sidebar-item";
 import { useAppTheme } from "@/hooks/store/use-app-theme";
 import { useWorkspace } from "@/hooks/store/use-workspace";
 import { useUser, useUserProfile } from "@/hooks/store/user";
-import { useInstance } from "@/hooks/store/use-instance";
 // components
 import { WorkspaceLogo } from "../logo";
 import SidebarDropdownItem from "./dropdown-item";
@@ -36,13 +35,11 @@ export const WorkspaceMenuRoot = observer(function WorkspaceMenuRoot(props: Work
   const { variant } = props;
   // store hooks
   const { toggleSidebar, toggleAnySidebarDropdown } = useAppTheme();
-  const { config } = useInstance();
   const { data: currentUser } = useUser();
   const { signOut } = useUser();
   const { updateUserProfile } = useUserProfile();
   const { currentWorkspace: activeWorkspace, workspaces } = useWorkspace();
   // derived values
-  const isWorkspaceCreationDisabled = config?.is_workspace_creation_disabled ?? false;
   // translation
   const { t } = useTranslation();
   // local state
@@ -186,17 +183,7 @@ export const WorkspaceMenuRoot = observer(function WorkspaceMenuRoot(props: Work
                     )}
                   </div>
                   <div className="flex w-full flex-col items-start justify-start gap-2 px-4 py-2 text-13">
-                    {!isWorkspaceCreationDisabled && (
-                      <Link href="/create-workspace" className="w-full">
-                        <Menu.Item
-                          as="div"
-                          className="flex items-center gap-2 rounded-sm px-2 py-1 text-13 font-medium text-secondary hover:bg-layer-transparent-hover"
-                        >
-                          <PlusCircleOutline className="size-4 flex-shrink-0" />
-                          {t("create_workspace")}
-                        </Menu.Item>
-                      </Link>
-                    )}
+
 
                     <Link href="/invitations" className="w-full" onClick={handleItemClick}>
                       <Menu.Item

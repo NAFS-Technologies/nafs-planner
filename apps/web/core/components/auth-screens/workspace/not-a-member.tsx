@@ -28,11 +28,7 @@ export function NotAWorkspaceMember() {
                 <Button variant="secondary">Check pending invites</Button>
               </span>
             </Link>
-            <Link href="/create-workspace">
-              <span>
-                <Button variant="primary">Create new workspace</Button>
-              </span>
-            </Link>
+
           </div>
         </div>
       </div>
