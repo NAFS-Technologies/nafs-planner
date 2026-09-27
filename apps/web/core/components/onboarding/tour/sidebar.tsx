@@ -22,7 +22,7 @@ const sidebarOptions: {
   },
   {
     key: "cycles",
-    label: "Cycles",
+    label: "Sprints",
     Icon: CyclesOutline,
   },
   {
@@ -53,7 +53,7 @@ export function TourSidebar({ step, setStep }: Props) {
       <h3 className="text-16 font-medium">
         Let{"'"}s get started!
         <br />
-        Get more out of Plane.
+        Get more out of Taskflow.
       </h3>
       <div className="mt-8 space-y-5">
         {sidebarOptions.map((option) => (

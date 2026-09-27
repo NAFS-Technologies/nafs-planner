@@ -166,7 +166,7 @@ export const IssueDetailRoot = observer(function IssueDetailRoot(props: TIssueDe
           });
           await removeFromCyclePromise;
         } catch (error) {
-          console.log("Error in removing issue from cycle:", error);
+          console.log("Error in removing issue from sprint:", error);
         }
       },
       removeIssueFromModule: async (workspaceSlug: string, projectId: string, moduleId: string, issueId: string) => {

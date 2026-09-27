@@ -76,7 +76,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
     features: [
       {
         title: "Projects",
-        description: "Add projects to house work items, cycles, and modules.",
+        description: "Add projects to house work items, sprints, and modules.",
         cloud: {
           free: true,
           one: true,
@@ -98,7 +98,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
       },
       {
         title: "Comments",
-        description: "Respond to work items, @mention members, and brainstorm\ntogether without leaving Plane.",
+        description: "Respond to work items, @mention members, and brainstorm\ntogether without leaving Taskflow.",
         cloud: {
           free: true,
           one: true,
@@ -108,7 +108,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
         },
       },
       {
-        title: "Cycles",
+        title: "Sprints",
         description: "Track work in timeboxes with differing frequency.",
         cloud: {
           free: true,
@@ -160,7 +160,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
     features: [
       {
         title: "Bulk Ops",
-        description: "Add several work items to cycles or modules, transfer\nthem, or edit their properties.",
+        description: "Add several work items to sprints or modules, transfer\nthem, or edit their properties.",
         cloud: {
           free: false,
           one: "Limited props",
@@ -191,8 +191,8 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
         },
       },
       {
-        title: "Active Cycles",
-        description: "See all running cycles across all projects, or soon, in\na single project.",
+        title: "Active Sprints",
+        description: "See all running sprints across all projects, or soon, in\na single project.",
         cloud: {
           free: false,
           one: true,
@@ -236,7 +236,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
       },
       {
         title: "Work item Transfers",
-        description: "Move a work item from a project or a cycle to\nanother.",
+        description: "Move a work item from a project or a sprint to\nanother.",
         cloud: {
           free: false,
           one: false,
@@ -246,9 +246,9 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
         },
       },
       {
-        title: "Auto-transfer Cycle Work items",
+        title: "Auto-transfer Sprint Work items",
         description:
-          "Transfer incomplete work items from a completed cycle\nto the next cycle or to the default project state. ",
+          "Transfer incomplete work items from a completed sprint\nto the next sprint or to the default project state. ",
         cloud: {
           free: false,
           one: false,
@@ -295,7 +295,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
       },
       {
         title: "Module Overview",
-        description: "Like Cycle Overviews, see relevant details and\nprogress charts for each module.",
+        description: "Like Sprint Overviews, see relevant details and\nprogress charts for each module.",
         cloud: {
           free: false,
           one: false,
@@ -378,8 +378,8 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
         },
       },
       {
-        title: "Teamspace Cycles",
-        description: "See multiple cycles in multiple projects at once.",
+        title: "Teamspace Sprints",
+        description: "See multiple sprints in multiple projects at once.",
         cloud: {
           free: false,
           one: false,
@@ -537,7 +537,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
       {
         title: "Progress Charts",
         description:
-          "Track progress in cycles, modules, and overviews\nthroughout Plane without switching to dashboards\nor Analytics.",
+          "Track progress in sprints, modules, and overviews\nthroughout Taskflow without switching to dashboards\nor Analytics.",
         cloud: {
           free: false,
           one: false,
@@ -547,8 +547,8 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
         },
       },
       {
-        title: "Cycle Reports",
-        description: "Get on-demand cycle reports during and after a\ncycle. Revisit reports anytime from permalinks.",
+        title: "Sprint Reports",
+        description: "Get on-demand sprint reports during and after a\ncycle. Revisit reports anytime from permalinks.",
         cloud: {
           free: false,
           one: false,
@@ -613,7 +613,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
     features: [
       {
         title: "Power K",
-        description: "Access a keyboard-first gateway to almost anything\nin Plane.",
+        description: "Access a keyboard-first gateway to almost anything\nin Taskflow.",
         cloud: {
           free: true,
           one: true,
@@ -657,7 +657,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
       {
         title: "PQL",
         description:
-          "Write Plane Query Language in search with support\nfor Boolean operators. Soon, you can write natural\nlanguage queries.",
+          "Write Taskflow Query Language in search with support\nfor Boolean operators. Soon, you can write natural\nlanguage queries.",
         cloud: {
           free: false,
           one: false,
@@ -749,7 +749,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
       },
       {
         title: "API-enabled Audit Logs",
-        description: "See a full-workspace audit log and use APIs to flag\nPlane activity in compliance systems.",
+        description: "See a full-workspace audit log and use APIs to flag\nTaskflow activity in compliance systems.",
         comingSoon: true,
         cloud: {
           free: false,
@@ -968,7 +968,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
       {
         title: "GitHub",
         description:
-          "Sync Plane work items and states to GitHub work items and\nstates. Update GitHub automatically with activity\nfrom Plane and vice-versa.",
+          "Sync Taskflow work items and states to GitHub work items and\nstates. Update GitHub automatically with activity\nfrom Taskflow and vice-versa.",
         cloud: {
           free: false,
           one: false,
@@ -979,7 +979,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
       },
       {
         title: "Slack",
-        description: "Get Plane activity in Slack and use / commands in\nSlack to make changes in Plane.",
+        description: "Get Taskflow activity in Slack and use / commands in\nSlack to make changes in Taskflow.",
         cloud: {
           free: false,
           one: false,
@@ -1001,7 +1001,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
       },
       {
         title: "Zendesk",
-        description: "Create Plane work items from Zendesk tickets.",
+        description: "Create Taskflow work items from Zendesk tickets.",
         cloud: {
           free: false,
           one: false,
@@ -1012,7 +1012,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
       },
       {
         title: "Freshdesk",
-        description: "Create Plane work items from Freshdesk tickets.",
+        description: "Create Taskflow work items from Freshdesk tickets.",
         cloud: {
           free: false,
           one: false,
@@ -1058,7 +1058,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
     features: [
       {
         title: "SAML",
-        description: "Get the officially supported SAML implementation\nand make Plane secure with any IdP.",
+        description: "Get the officially supported SAML implementation\nand make Taskflow secure with any IdP.",
         cloud: {
           free: false,
           one: true,
@@ -1069,7 +1069,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
       },
       {
         title: "OIDC",
-        description: "Get the officially supported OIDC implementation\nand make Plane secure with any IdP.",
+        description: "Get the officially supported OIDC implementation\nand make Taskflow secure with any IdP.",
         selfHostedOnly: true,
         cloud: {
           free: false,
@@ -1082,7 +1082,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
       {
         title: "Domain Security",
         description:
-          "Choose other domains that can authenticate into\nyour Plane workspace or restrict all but one domain.",
+          "Choose other domains that can authenticate into\nyour Taskflow workspace or restrict all but one domain.",
         cloud: {
           free: false,
           one: false,
@@ -1093,7 +1093,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
       },
       {
         title: "Two-factor authentication and passkeys",
-        description: "Secure your Plane workspace with device-\ndependent two-factor authentication and passkeys. ",
+        description: "Secure your Taskflow workspace with device-\ndependent two-factor authentication and passkeys. ",
         cloud: {
           free: false,
           one: false,
@@ -1115,7 +1115,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
       },
       {
         title: "LDAP",
-        description: "Get our official LDAP implementation and secure\nyour Plane workspace with your LDAP server.",
+        description: "Get our official LDAP implementation and secure\nyour Taskflow workspace with your LDAP server.",
         comingSoon: true,
         cloud: {
           free: false,
@@ -1134,7 +1134,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
     features: [
       {
         title: "God Mode",
-        description: "Manage your self-hosted Plane instance better with\nan instance admin interface.",
+        description: "Manage your self-hosted Taskflow instance better with\nan instance admin interface.",
         cloud: {
           free: true,
           one: true,
@@ -1145,7 +1145,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
       },
       {
         title: "One-click Deployment",
-        description: "Install and deploy your self-hosted Plane to any\nprivate cloud with a single-line command.",
+        description: "Install and deploy your self-hosted Taskflow to any\nprivate cloud with a single-line command.",
         cloud: {
           free: false,
           one: true,
@@ -1236,7 +1236,7 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
         description: (
           <>
             Get business-friendly SLAs with higher plans. SLAs are by priority of work item and tiers{" "}
-            <a href="https://plane.so/talk-to-sales" target="_blank" rel="noopener noreferrer" className="underline">
+            <a href="http://localhost:8080" target="_blank" rel="noopener noreferrer" className="underline">
               can be requested
             </a>
             .
@@ -1301,8 +1301,8 @@ export const PLANE_PLANS: PlanePlans = {
     },
   },
   planHighlights: {
-    free: ["Upto 12 users", "Pages", "Unlimited projects", "Unlimited cycles and modules"],
-    one: ["Upto 50 users", "OIDC and SAML", "Active cycles", "Limited time tracking"],
+    free: ["Upto 12 users", "Pages", "Unlimited projects", "Unlimited sprints and modules"],
+    one: ["Upto 50 users", "OIDC and SAML", "Active sprints", "Limited time tracking"],
     pro: ["Unlimited users", "Custom work items + Properties", "Work item templates", "Full Time Tracking"],
     business: ["RBAC", "Project Templates", "Baselines And Deviations", "Custom Reports"],
     enterprise: ["Private + managed deployments", "GAC", "LDAP support", "Databases + Formulas"],

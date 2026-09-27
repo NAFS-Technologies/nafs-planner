@@ -1,0 +1,7 @@
+:3000 {
+ root * /usr/share/caddy/html
+ header X-Content-Type-Options nosniff
+ header X-Frame-Options DENY
+ try_files {path} /god-mode/index.html
+ file_server
+}

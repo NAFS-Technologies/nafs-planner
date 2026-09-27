@@ -12,21 +12,21 @@ SPECTACULAR_SETTINGS = {
     # ========================================================================
     # Basic API Information
     # ========================================================================
-    "TITLE": "The Plane REST API",
+    "TITLE": "The Taskflow REST API",
     "DESCRIPTION": (
-        "The Plane REST API\n\n"
+        "The Taskflow REST API\n\n"
         "Visit our quick start guide and full API documentation at "
-        "[developers.plane.so](https://developers.plane.so/api-reference/introduction)."
+        "[Taskflow API](http://localhost:8080)."
     ),
     "CONTACT": {
-        "name": "Plane",
-        "url": "https://plane.so",
-        "email": "support@plane.so",
+        "name": "Taskflow",
+        "url": "http://localhost:8080",
+        "email": "support@taskflow.dev",
     },
     "VERSION": "0.0.1",
     "LICENSE": {
         "name": "GNU AGPLv3",
-        "url": "https://github.com/makeplane/plane/blob/preview/LICENSE.txt",
+        "url": "https://www.gnu.org/licenses/agpl-3.0.html",
     },
     # ========================================================================
     # Schema Generation Settings
@@ -45,7 +45,7 @@ SPECTACULAR_SETTINGS = {
     # ========================================================================
     "SERVERS": [
         {"url": "http://localhost:8000", "description": "Local"},
-        {"url": "https://api.plane.so", "description": "Production"},
+        {"url": "http://localhost:8080", "description": "Production"},
     ],
     # ========================================================================
     # API Tag Definitions

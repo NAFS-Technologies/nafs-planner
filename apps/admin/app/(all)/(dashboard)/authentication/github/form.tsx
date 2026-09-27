@@ -68,14 +68,7 @@ export function InstanceGithubConfigForm(props: Props) {
       description: (
         <>
           You will get this from your{" "}
-          <a
-            href="https://github.com/settings/applications/new"
-            target="_blank"
-            className="text-accent-primary hover:underline"
-            rel="noreferrer"
-          >
-            GitHub OAuth application settings.
-          </a>
+
         </>
       ),
       placeholder: "70a44354520df8bd9bcd",
@@ -89,14 +82,7 @@ export function InstanceGithubConfigForm(props: Props) {
       description: (
         <>
           Your client secret is also found in your{" "}
-          <a
-            href="https://github.com/settings/applications/new"
-            target="_blank"
-            className="text-accent-primary hover:underline"
-            rel="noreferrer"
-          >
-            GitHub OAuth application settings.
-          </a>
+
         </>
       ),
       placeholder: "9b0050f94ec1b744e32ce79ea4ffacd40d4119cb",
@@ -122,15 +108,7 @@ export function InstanceGithubConfigForm(props: Props) {
       description: (
         <>
           We will auto-generate this. Paste this into the <CodeBlock darkerShade>Authorized origin URL</CodeBlock> field{" "}
-          <a
-            href="https://github.com/settings/applications/new"
-            target="_blank"
-            className="text-accent-primary hover:underline"
-            rel="noreferrer"
-            aria-label="GitHub OAuth application settings"
-          >
-            here.
-          </a>
+
         </>
       ),
     },
@@ -145,15 +123,7 @@ export function InstanceGithubConfigForm(props: Props) {
         <>
           We will auto-generate this. Paste this into your <CodeBlock darkerShade>Authorized Callback URI</CodeBlock>{" "}
           field{" "}
-          <a
-            href="https://github.com/settings/applications/new"
-            target="_blank"
-            className="text-accent-primary hover:underline"
-            rel="noreferrer"
-            aria-label="GitHub OAuth application settings"
-          >
-            here.
-          </a>
+
         </>
       ),
     },
@@ -197,7 +167,7 @@ export function InstanceGithubConfigForm(props: Props) {
       <div className="flex flex-col gap-8">
         <div className="grid w-full grid-cols-2 gap-x-12 gap-y-8">
           <div className="col-span-2 flex flex-col gap-y-4 pt-1 md:col-span-1">
-            <div className="pt-2.5 text-18 font-medium">GitHub-provided details for Plane</div>
+            <div className="pt-2.5 text-18 font-medium">GitHub-provided details for Taskflow</div>
             {GITHUB_FORM_FIELDS.map((field) => (
               <ControllerInput
                 key={field.key}
@@ -235,7 +205,7 @@ export function InstanceGithubConfigForm(props: Props) {
             </div>
           </div>
           <div className="col-span-2 flex flex-col gap-y-6 md:col-span-1">
-            <div className="pt-2 text-18 font-medium">Plane-provided details for GitHub</div>
+            <div className="pt-2 text-18 font-medium">Taskflow-provided details for GitHub</div>
 
             <div className="flex flex-col gap-y-4">
               {/* common service details */}

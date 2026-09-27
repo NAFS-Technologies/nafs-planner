@@ -1,0 +1,27 @@
+[
+  {
+    "identifier": "COM",
+    "emoji": "128722",
+    "banner": "/demo-projects/com.svg"
+  },
+  {
+    "identifier": "CARE",
+    "emoji": "129658",
+    "banner": "/demo-projects/care.svg"
+  },
+  {
+    "identifier": "FLEET",
+    "emoji": "128666",
+    "banner": "/demo-projects/fleet.svg"
+  },
+  {
+    "identifier": "LEARN",
+    "emoji": "127891",
+    "banner": "/demo-projects/learn.svg"
+  },
+  {
+    "identifier": "OPS",
+    "emoji": "9881",
+    "banner": "/demo-projects/ops.svg"
+  }
+]

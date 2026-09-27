@@ -170,7 +170,7 @@ export const IssuePeekOverview = observer(function IssuePeekOverview(props: IWor
           await removeFromCyclePromise;
           fetchActivities(workspaceSlug, projectId, issueId);
         } catch (error) {
-          console.error("Error removing issue from cycle", error);
+          console.error("Error removing issue from sprint", error);
         }
       },
       changeModulesInIssue: async (

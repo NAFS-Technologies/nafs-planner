@@ -70,7 +70,7 @@ export const TransferIssuesModal = observer(function TransferIssuesModal(props: 
       setToast({
         type: TOAST_TYPE.ERROR,
         title: "Error",
-        message: error.error || "Unable to fetch cycle details",
+        message: error.error || "Unable to fetch sprint details",
       });
     });
   };
@@ -97,7 +97,7 @@ export const TransferIssuesModal = observer(function TransferIssuesModal(props: 
           <SearchOutline className="h-4 w-4 text-secondary" />
           <input
             className="text-13 outline-none"
-            placeholder="Search for a cycle..."
+            placeholder="Search for a sprint..."
             onChange={(e) => setQuery(e.target.value)}
             value={query}
           />
