@@ -28,13 +28,6 @@ export function AuthBase({ authType, children }: AuthBaseProps) {
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/15 to-transparent" />
-        <Link
-          href="/"
-          aria-label="Taskflow home"
-          className="tracking-widest absolute top-6 left-6 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[12px] font-bold text-black lg:top-10 lg:left-10 lg:bg-white/90 lg:text-white"
-        >
-          <img src="/taskflow-logo.svg" alt="Taskflow" className="h-10 w-auto" />
-        </Link>
         <div className="absolute right-6 bottom-6 left-6 text-white lg:right-10 lg:bottom-10 lg:left-10">
           <div className="mb-4 h-1 w-8 rounded-full bg-[#62aef0] lg:h-px lg:bg-white/50" />
           <blockquote className="lg:font-normal max-w-md text-[24px] leading-[1.3] font-semibold tracking-tight lg:text-[22px]">
