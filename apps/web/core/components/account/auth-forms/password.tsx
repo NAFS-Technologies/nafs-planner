@@ -7,6 +7,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { observer } from "mobx-react";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 // icons
 import { CloseCircleOutline, HideOutline, ShowOutline } from "@makeplane/propel/icons";
 // plane imports
@@ -27,6 +28,8 @@ import { AuthService } from "@/services/auth.service";
 
 type Props = {
   email: string;
+  editableEmail?: boolean;
+  onEmailChange?: (email: string) => void;
   isSMTPConfigured: boolean;
   mode: EAuthModes;
   handleEmailClear: () => void;
@@ -48,7 +51,16 @@ const defaultValues: TPasswordFormValues = {
 const authService = new AuthService();
 
 export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props) {
-  const { email, isSMTPConfigured, handleAuthStep, handleEmailClear, mode, nextPath } = props;
+  const {
+    email,
+    editableEmail = false,
+    onEmailChange,
+    isSMTPConfigured,
+    handleAuthStep,
+    handleEmailClear,
+    mode,
+    nextPath,
+  } = props;
   // plane imports
   const { t } = useTranslation();
   // ref
@@ -68,8 +80,10 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
   const handleShowPassword = (key: keyof typeof showPassword) =>
     setShowPassword((prev) => ({ ...prev, [key]: !prev[key] }));
 
-  const handleFormChange = (key: keyof TPasswordFormValues, value: string) =>
+  const handleFormChange = (key: keyof TPasswordFormValues, value: string) => {
     setPasswordFormData((prev) => ({ ...prev, [key]: value }));
+    if (key === "email") onEmailChange?.(value);
+  };
 
   useEffect(() => {
     if (csrfPromise === undefined) {
@@ -84,10 +98,10 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
 
   const passwordSupport =
     mode === EAuthModes.SIGN_IN ? (
-      <div className="w-full">
+      <div className="shrink-0">
         {isSMTPConfigured ? (
           <Link
-            href={`/accounts/forgot-password?email=${encodeURIComponent(email)}`}
+            href={`/accounts/forgot-password?email=${encodeURIComponent(passwordFormData.email)}`}
             className="text-11 font-medium text-accent-primary"
           >
             {t("auth.common.forgot_password")}
@@ -105,12 +119,11 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
 
   const isButtonDisabled = useMemo(
     () =>
-      !isSubmitting &&
-      !!passwordFormData.password &&
-      (mode === EAuthModes.SIGN_UP ? passwordFormData.password === passwordFormData.confirm_password : true)
-        ? false
-        : true,
-    [isSubmitting, mode, passwordFormData.confirm_password, passwordFormData.password]
+      isSubmitting ||
+      !passwordFormData.email ||
+      !passwordFormData.password ||
+      (mode === EAuthModes.SIGN_UP && passwordFormData.password !== passwordFormData.confirm_password),
+    [isSubmitting, mode, passwordFormData.confirm_password, passwordFormData.password, passwordFormData.email]
   );
 
   const password = passwordFormData?.password ?? "";
@@ -119,7 +132,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
 
   const handleCSRFToken = async () => {
     if (!formRef || !formRef.current) return;
-    const token = await csrfPromise;
+    const token = await (csrfPromise ?? authService.requestCSRFToken());
     if (!token?.csrf_token) return;
     const csrfElement = formRef.current.querySelector("input[name=csrfmiddlewaretoken]");
     csrfElement?.setAttribute("value", token?.csrf_token);
@@ -159,13 +172,16 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
         }}
       >
         <input type="hidden" name="csrfmiddlewaretoken" />
-        <input type="hidden" value={passwordFormData.email} name="email" />
+        {!editableEmail && <input type="hidden" value={passwordFormData.email} name="email" />}
         {nextPath && <input type="hidden" value={nextPath} name="next_path" />}
         <div className="space-y-1">
           <label htmlFor="email" className="text-13 font-medium text-tertiary">
-            {t("auth.common.email.label")}
+            Work email address
           </label>
-          <InputGroup size="2xl">
+          <InputGroup
+            size="2xl"
+            className="min-h-11 rounded-lg bg-white! [&:focus-within]:border-[#005db2] [&:focus-within]:ring-[#005db2]/20 [&:not(:focus-within)]:border-[#dddddd]"
+          >
             <Input
               size="2xl"
               id="email"
@@ -174,9 +190,11 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
               value={passwordFormData.email}
               onChange={(e) => handleFormChange("email", e.target.value)}
               placeholder={t("auth.common.email.placeholder")}
-              disabled
+              disabled={!editableEmail}
+              required
+              autoComplete="email"
             />
-            {passwordFormData.email.length > 0 && (
+            {!editableEmail && passwordFormData.email.length > 0 && (
               <button
                 type="button"
                 className="grid size-5 place-items-center"
@@ -190,10 +208,16 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
         </div>
 
         <div className="space-y-1">
-          <label htmlFor="password" className="text-13 font-medium text-tertiary">
-            {mode === EAuthModes.SIGN_IN ? t("auth.common.password.label") : t("auth.common.password.set_password")}
-          </label>
-          <InputGroup size="2xl">
+          <div className="flex items-center justify-between gap-2">
+            <label htmlFor="password" className="text-13 font-medium text-tertiary">
+              {mode === EAuthModes.SIGN_IN ? t("auth.common.password.label") : t("auth.common.password.set_password")}
+            </label>
+            {mode === EAuthModes.SIGN_IN && passwordSupport}
+          </div>
+          <InputGroup
+            size="2xl"
+            className="min-h-11 rounded-lg bg-white! [&:focus-within]:border-[#005db2] [&:focus-within]:ring-[#005db2]/20 [&:not(:focus-within)]:border-[#dddddd]"
+          >
             <Input
               size="2xl"
               type={showPassword?.password ? "text" : "password"}
@@ -204,8 +228,8 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
               placeholder={t("auth.common.password.placeholder")}
               onFocus={() => setIsPasswordInputFocused(true)}
               onBlur={() => setIsPasswordInputFocused(false)}
-              autoComplete="off"
-              autoFocus
+              autoComplete={mode === EAuthModes.SIGN_IN ? "current-password" : "new-password"}
+              required
             />
             <button
               type="button"
@@ -222,7 +246,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
               )}
             </button>
           </InputGroup>
-          {passwordSupport}
+          {mode !== EAuthModes.SIGN_IN && passwordSupport}
         </div>
 
         {mode === EAuthModes.SIGN_UP && (
@@ -230,7 +254,10 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
             <label htmlFor="confirm-password" className="text-13 font-medium text-tertiary">
               {t("auth.common.password.confirm_password.label")}
             </label>
-            <InputGroup size="2xl">
+            <InputGroup
+              size="2xl"
+              className="min-h-11 rounded-lg bg-white! [&:focus-within]:border-[#005db2] [&:focus-within]:ring-[#005db2]/20 [&:not(:focus-within)]:border-[#dddddd]"
+            >
               <Input
                 size="2xl"
                 type={showPassword?.retypePassword ? "text" : "password"}
@@ -241,7 +268,8 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
                 placeholder={t("auth.common.password.confirm_password.placeholder")}
                 onFocus={() => setIsRetryPasswordInputFocused(true)}
                 onBlur={() => setIsRetryPasswordInputFocused(false)}
-                autoComplete="off"
+                autoComplete={mode === EAuthModes.SIGN_IN ? "current-password" : "new-password"}
+                required
               />
               <button
                 type="button"
@@ -274,10 +302,10 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
               <Button type="submit" variant="primary" className="w-full" size="xl" disabled={isButtonDisabled}>
                 {isSubmitting ? (
                   <Spinner height="20px" width="20px" />
-                ) : isSMTPConfigured ? (
-                  t("common.continue")
                 ) : (
-                  t("common.go_to_workspace")
+                  <>
+                    Sign in <ArrowRight className="ml-2 size-4" aria-hidden="true" />
+                  </>
                 )}
               </Button>
               {isSMTPConfigured && (

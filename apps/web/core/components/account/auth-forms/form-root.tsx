@@ -74,6 +74,7 @@ export const AuthFormRoot = observer(function AuthFormRoot(props: TAuthFormRoot)
           }
         }
         setIsExistingEmail(response.existing);
+        return undefined;
       })
       .catch((error) => {
         const errorhandler = authErrorHandler(error?.error_code?.toString(), data?.email || undefined);
@@ -90,9 +91,9 @@ export const AuthFormRoot = observer(function AuthFormRoot(props: TAuthFormRoot)
   };
 
   // generating the unique code
-  const generateEmailUniqueCode = async (email: string): Promise<{ code: string } | undefined> => {
+  const generateEmailUniqueCode = async (targetEmail: string): Promise<{ code: string } | undefined> => {
     if (!isSMTPConfigured) return;
-    const payload = { email: email };
+    const payload = { email: targetEmail };
     return await authService
       .generateUniqueCode(payload)
       .then(() => ({ code: "" }))
@@ -102,6 +103,24 @@ export const AuthFormRoot = observer(function AuthFormRoot(props: TAuthFormRoot)
         throw error;
       });
   };
+
+  if (authMode === EAuthModes.SIGN_IN && config?.is_email_password_enabled && authStep !== EAuthSteps.UNIQUE_CODE) {
+    return (
+      <AuthPasswordForm
+        mode={authMode}
+        isSMTPConfigured={isSMTPConfigured}
+        email={email}
+        editableEmail
+        onEmailChange={setEmail}
+        handleEmailClear={handleEmailClear}
+        handleAuthStep={(step) => {
+          if (step === EAuthSteps.UNIQUE_CODE) void generateEmailUniqueCode(email);
+          setAuthStep(step);
+        }}
+        nextPath={nextPath || undefined}
+      />
+    );
+  }
 
   if (authStep === EAuthSteps.EMAIL) {
     return <AuthEmailForm defaultEmail={email} onSubmit={handleEmailVerification} />;

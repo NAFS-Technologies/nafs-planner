@@ -5,11 +5,10 @@
  */
 
 import React from "react";
-import { ArrowRight, Check, Layers, LockKeyhole } from "lucide-react";
+import Link from "next/link";
 import { AuthRoot } from "@/components/account/auth-forms/auth-root";
-import type { EAuthModes } from "@/helpers/authentication.helper";
-import { AuthFooter } from "./footer";
-import { AuthHeader, AuthHeaderBase } from "./header";
+import { PageHead } from "@/components/core/page-title";
+import { EAuthModes } from "@/helpers/authentication.helper";
 
 type AuthBaseProps = {
   authType: EAuthModes;
@@ -18,102 +17,64 @@ type AuthBaseProps = {
 
 export function AuthBase({ authType, children }: AuthBaseProps) {
   return (
-    <div
-      className="relative z-10 flex h-screen w-full flex-col overflow-y-auto bg-[#f8fafc] text-[#0f172a]"
-      style={{
-        backgroundImage:
-          "radial-gradient(circle at 0% 15%, #ccfbf1 0, transparent 28%), radial-gradient(circle at 100% 85%, #cffafe 0, transparent 28%)",
-      }}
-    >
-      {children ? <AuthHeaderBase pageTitle="Reset password" /> : <AuthHeader type={authType} />}
-      <div className="relative mx-auto grid w-full max-w-[76rem] flex-1 items-center gap-6 px-4 py-5 sm:px-6 lg:grid-cols-[7fr_5fr] lg:gap-10 lg:px-8 lg:py-12">
-        <aside className="relative order-2 overflow-hidden rounded-2xl bg-linear-to-br from-[#0b8279] via-[#0f766e] to-[#115e59] p-4 text-white shadow-xl shadow-[#115e59]/15 sm:p-6 lg:order-1 lg:rounded-3xl lg:p-10 xl:p-12">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold text-white lg:mb-8 lg:py-1.5 lg:text-[12px]">
-            <Layers className="size-4" /> A clearer way to work
-          </div>
-          <h2 className="text-[18px] leading-[1.15] font-bold tracking-tight text-white lg:text-[2.5rem] xl:text-[3rem]">
+    <main className="grid min-h-dvh w-full bg-[#fdf9f5] text-[#1c1b1a] lg:grid-cols-2">
+      <PageHead
+        title={`${children ? "Account recovery" : authType === EAuthModes.SIGN_IN ? "Sign in" : "Sign up"} - Taskflow`}
+      />
+      <aside className="shadow-sm relative mx-4 mt-4 h-[250px] overflow-hidden rounded-2xl bg-[#e6e2de] sm:h-[300px] lg:sticky lg:top-0 lg:m-0 lg:h-dvh lg:rounded-none lg:shadow-none">
+        <img
+          src="/taskflow-login-workspace.jpg"
+          alt="A calm workspace with natural light and a software design desk"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/15 to-transparent" />
+        <Link
+          href="/"
+          aria-label="Taskflow home"
+          className="tracking-widest absolute top-6 left-6 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[12px] font-bold text-black lg:top-10 lg:left-10 lg:bg-transparent lg:p-0 lg:text-white"
+        >
+          <span aria-hidden="true" className="size-2.5 rounded-full bg-[#005db2] lg:bg-white" /> TASKFLOW
+        </Link>
+        <div className="absolute right-6 bottom-6 left-6 text-white lg:right-10 lg:bottom-10 lg:left-10">
+          <div className="mb-4 h-1 w-8 rounded-full bg-[#62aef0] lg:h-px lg:bg-white/50" />
+          <blockquote className="lg:font-normal max-w-md text-[24px] leading-[1.3] font-semibold tracking-tight lg:text-[22px]">
             Great work starts with a clear plan.
-          </h2>
-          <p className="mt-2 text-[12px] leading-relaxed text-white lg:mt-5 lg:text-[17px]">
-            <span className="lg:hidden">Bring projects, priorities, and people together on mobile.</span>
-            <span className="hidden lg:inline">
-              Bring your projects, priorities, and people together. Keep your team focused on what comes next.
-            </span>
+          </blockquote>
+          <p className="mt-3 hidden max-w-md text-[15px] leading-6 text-white/75 lg:block">
+            The thoughtful workspace designed for flow, precision, and clarity.
           </p>
-          {/* ponytail: static illustration; no live workspace data needed on the login page. */}
-          <div
-            aria-hidden="true"
-            className="mt-4 rounded-xl border border-white/60 bg-white p-3 text-[#0f172a] shadow-lg lg:mt-8 lg:rounded-2xl lg:p-5"
-          >
-            <div className="flex items-center justify-between border-b border-[#e2e8f0] pb-2 lg:pb-3">
-              <div className="flex items-center gap-2 text-[12px] font-semibold text-[#1e293b]">
-                <span className="grid size-5 place-items-center rounded-md lg:size-7 bg-[#f0fdfa] text-[#0f766e]">
-                  <Layers className="size-4" />
-                </span>{" "}
-                Team workspace
-              </div>
-              <span className="rounded-md bg-[#f1f5f9] px-2 py-1 text-[10px] font-medium text-[#475569]">
-                This week
-              </span>
-            </div>
-            <div className="mt-3 grid grid-cols-2 gap-2 lg:mt-4 lg:grid-cols-3 lg:gap-3">
-              {[
-                { title: "To do", task: "Plan the next sprint", detail: "Planning", progress: "w-2/5" },
-                { title: "In progress", task: "Build something great", detail: "Product", progress: "w-3/4" },
-                { title: "Done", task: "Bring the team together", detail: "Team", progress: "w-full" },
-              ].map((column, index) => (
-                <div key={column.title} className={`min-w-0 ${index === 0 ? "hidden lg:block" : ""}`}>
-                  <div className="mb-2 hidden items-center gap-1.5 text-[10px] font-semibold tracking-wide text-[#475569] uppercase lg:flex">
-                    <span className={`size-1.5 rounded-full ${index === 1 ? "bg-[#0f766e]" : "bg-[#64748b]"}`} />
-                    {column.title}
-                  </div>
-                  <div
-                    className={`rounded-xl border p-2.5 lg:p-3 ${index === 1 ? "border-[#99f6e4] bg-[#f0fdfa]" : "border-[#e2e8f0] bg-[#f8fafc]"}`}
-                  >
-                    <span className="text-[10px] text-[#475569]">
-                      TF-{index + 101}
-                      <span className="lg:hidden"> · {column.title.toUpperCase()}</span>
-                    </span>
-                    <p className="mt-1 min-h-8 text-[11px] leading-4 font-semibold text-[#1e293b] lg:min-h-10 lg:text-[12px]">
-                      {column.task}
-                    </p>
-                    <div className="mt-2 h-1.5 rounded-full lg:mt-3 bg-[#ccfbf1]">
-                      <div className={`h-full rounded-full bg-[#0f766e] ${column.progress}`} />
-                    </div>
-                    <div className="mt-2 flex items-center justify-between text-[10px] lg:mt-3 text-[#475569]">
-                      <span>{column.detail}</span>
-                      <span className="grid size-5 place-items-center rounded-full bg-[#ccfbf1] text-[#115e59]">
-                        {index === 2 ? <Check className="size-3" /> : <span>{index === 0 ? "JD" : "AK"}</span>}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div className="mt-6 hidden border-t border-white/20 pt-3 text-[11px] tracking-wide text-white/75 lg:block">
+            TASKFLOW SOFTWARE
           </div>
-          <div className="mt-3 flex items-center gap-2 text-[12px] font-medium text-white lg:mt-8 lg:border-t lg:border-white/20 lg:pt-4 lg:text-[14px]">
-            Less friction. More momentum.
-            <ArrowRight className="size-4" />
-          </div>
-        </aside>
+        </div>
+      </aside>
+      <div className="flex min-w-0 flex-col justify-between px-4 py-8 sm:px-10 lg:min-h-dvh lg:px-16 lg:py-12 xl:px-20">
+        <Link
+          href="/"
+          aria-label="Taskflow home"
+          className="tracking-widest mx-auto hidden w-full max-w-[400px] items-center gap-2 text-[12px] font-bold text-black lg:flex"
+        >
+          <span aria-hidden="true" className="size-2.5 rounded-full bg-[#005db2]" /> TASKFLOW
+        </Link>
         <section
           aria-label="Account access"
-          className="order-1 mx-auto flex w-full flex-col rounded-3xl border border-[#e2e8f0] bg-white p-6 text-[#0f172a] shadow-[0_20px_40px_-15px_rgba(15,23,42,0.1)] sm:p-8 lg:order-2 lg:p-10 [&_h1]:text-[#0f172a] [&_h1]:text-[26px] lg:[&_h1]:text-[30px] [&_p]:text-[#475569] [&_label]:text-[#334155] [&_input]:text-[#0f172a] [&_input]:placeholder:text-[#475569] [&_button:not([type=submit])]:min-h-6 [&_button:not([type=submit])]:min-w-6 [&_button[type=submit]]:min-h-12 [&_button[type=submit]]:rounded-xl [&_button[type=submit]]:bg-[#0f766e] [&_button[type=submit]]:text-white [&_button[type=submit]:hover]:bg-[#115e59] [&_button[type=submit]:disabled]:bg-[#e2e8f0] [&_button[type=submit]:disabled]:text-[#475569] [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-offset-4 [&_button:focus-visible]:outline-[#0f766e] [&_input:focus-visible]:outline-2 [&_input:focus-visible]:outline-offset-2 [&_input:focus-visible]:outline-[#0f766e] [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-4 [&_a:focus-visible]:outline-[#0f766e] [&_:focus-visible]:[outline-style:solid]!"
+          className="mx-auto my-auto w-full max-w-[400px] py-1 lg:py-12 [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-4 [&_a:focus-visible]:outline-[#005db2] [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-offset-4 [&_button:focus-visible]:outline-[#005db2] [&_button[type=submit]]:min-h-12 [&_button[type=submit]]:rounded-lg [&_button[type=submit]]:bg-black [&_button[type=submit]]:text-white [&_button[type=submit]:disabled]:opacity-50 [&_button[type=submit]:hover]:bg-[#31302e] [&_h1]:text-[28px] [&_h1]:text-black [&_input]:text-black [&_input]:placeholder:text-[#a39e98] [&_label]:text-[#31302e] [&_p]:text-[#615d59]"
         >
-          <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-[#99f6e4] bg-[#f0fdfa] px-3 py-1 text-[12px] font-medium text-[#115e59]">
-            <span className="size-1.5 rounded-full bg-[#0f766e]" aria-hidden="true" />
-            {children ? "Account recovery" : "Workspace login"}
-          </div>
           {children ?? <AuthRoot authMode={authType} />}
-          <div className="mt-6 flex items-center justify-center gap-2 border-t border-[#e2e8f0] pt-5 text-center text-[12px] leading-5 text-[#475569]">
-            <LockKeyhole className="size-4 shrink-0 text-[#0f766e]" aria-hidden="true" />
-            {children
-              ? "Use your work email to recover your account."
-              : "Sign in with your work email to join your team."}
-          </div>
+          <p className="mt-8 text-center text-[12px] leading-5 text-[#a39e98]">
+            By signing in, you agree to your organization&apos;s applicable terms and privacy policy.
+          </p>
         </section>
+        <footer className="mx-auto mt-8 flex w-full max-w-[400px] flex-col items-center justify-between gap-3 border-t border-[#e6e6e6] pt-6 text-[12px] text-[#a39e98] sm:flex-row lg:mt-0">
+          <span>© {new Date().getFullYear()} Taskflow</span>
+          <Link
+            href="/accounts/forgot-password"
+            className="rounded text-[#615d59] hover:text-black hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#005db2]"
+          >
+            Account help
+          </Link>
+        </footer>
       </div>
-      <AuthFooter />
-    </div>
+    </main>
   );
 }
