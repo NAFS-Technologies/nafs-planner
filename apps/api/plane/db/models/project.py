@@ -132,6 +132,9 @@ class Project(BaseModel):
 
         # Return cover image url
         if self.cover_image:
+            # ponytail: only seeded demo assets use this legacy local origin.
+            if self.cover_image.startswith("http://localhost:8080/demo-projects/"):
+                return self.cover_image.removeprefix("http://localhost:8080")
             return self.cover_image
 
         return None
