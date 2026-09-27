@@ -10,6 +10,7 @@
  reverse_proxy /live/* live:3000
  reverse_proxy /god-mode/* admin:3000
  reverse_proxy /spaces/* space:3000
- reverse_proxy /uploads/* plane-minio:9000
+ @uploads path /uploads /uploads/*
+ reverse_proxy @uploads plane-minio:9000
  reverse_proxy web:3000
 }
