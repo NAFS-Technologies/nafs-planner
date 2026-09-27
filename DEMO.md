@@ -39,3 +39,9 @@ Local documentation: http://localhost:8080/taskflow-agency/pages/
 Brand SVGs have transparent backgrounds; the UI brightens them in dark mode. Verify assets with `python3 branding/verify_assets.py`.
 
 The credential-bearing local `docker-compose.demo.json` is ignored. `docker-compose.demo.example.json` documents the stack with environment placeholders and relative paths. Supply credentials through a local `.env` and the existing `taskflow-demo-api` / `taskflow-demo-live` images before using the example.
+
+Deployment environment: copy `example.env` to `.env` and replace all `change-me` values. Keep password characters URL-safe, or percent-encode them in `DATABASE_URL` and `AMQP_URL`. Set `WEB_URL` to the public origin. The UI origin is also baked into frontend builds; update the `VITE_*_BASE_URL` build arguments in the demo Dockerfiles when changing the public origin. Configure TLS at the deployment proxy.
+
+Validate: `docker compose --env-file .env -p taskflow-demo -f docker-compose.demo.example.json config --quiet`
+
+Start the sanitized example: `docker compose --env-file .env -p taskflow-demo -f docker-compose.demo.example.json up -d --build` (requires the API/live image prerequisites above). Keep the existing volume names when restarting this demo so its data is preserved.
