@@ -23,7 +23,7 @@ export function AuthBase({ authType, children }: AuthBaseProps) {
       />
       <aside className="shadow-sm relative mx-4 mt-4 h-[250px] overflow-hidden rounded-2xl bg-[#e6e2de] sm:h-[300px] lg:sticky lg:top-0 lg:m-0 lg:h-dvh lg:rounded-none lg:shadow-none">
         <img
-          src="/taskflow-login-workspace.jpg"
+          src="/taskflow-login-workspace-hd.jpg"
           alt="A calm workspace with natural light and a software design desk"
           className="absolute inset-0 h-full w-full object-cover"
         />
